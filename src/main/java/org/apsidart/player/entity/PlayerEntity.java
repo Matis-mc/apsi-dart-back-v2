@@ -61,6 +61,13 @@ public class PlayerEntity {
         this.pseudo = pseudo;
     }
 
+    @Override
+    public String toString() {
+        return "PlayerEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", pseudo=" + pseudo
+                + "]";
+    }
+
+    
     
     
     /* 

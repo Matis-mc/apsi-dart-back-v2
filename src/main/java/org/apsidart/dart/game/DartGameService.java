@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameDto;
+import org.apsidart.dart.game.dto.DartGameTourDto;
 import org.apsidart.dart.game.entity.DartGameEntity;
 import org.apsidart.dart.game.enumeration.StatutGameEnum;
 import org.apsidart.dart.game.mapper.DartGameMapper;
@@ -26,7 +27,7 @@ public class DartGameService {
     @Inject
     DartPerformanceService performanceService;
 
-    private static final Logger LOG = Logger.getLogger(PlayerService.class);
+    private static final Logger LOG = Logger.getLogger(DartGameService.class);
 
     @Transactional
     public Long createGame(DartGameCreationDto dto){
@@ -71,6 +72,11 @@ public class DartGameService {
         
     }
 
-
+    public String performOnGame(DartGameTourDto dto){
+        LOG.info("[START] Enregistrement d'un tour avec payload : " + dto.toString());
+        dto.getPerformances().forEach(p -> performanceService.enregistrePerformanceForPlayer(p, dto.getIdJeu()));
+        LOG.info("[SUCCESS] Enregistrement d'un tour");
+        return "ça me coupe la chique";
+    }
     
 }

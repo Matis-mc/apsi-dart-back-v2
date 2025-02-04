@@ -1,6 +1,6 @@
 package org.apsidart.dart.performance.dto;
 
-import java.util.List;
+import java.util.LinkedList;
 
 public class DartPerformanceDto {
 
@@ -8,19 +8,19 @@ public class DartPerformanceDto {
 
     private Long idGame;
 
-    private List<Integer> historiquePosition;    
+    private LinkedList<Integer> historiquePosition;    
 
     private Integer score;
 
     private Integer nombreTour;
 
-    private List<String> volees;
+    private LinkedList<String> volees;
 
     public DartPerformanceDto() {
     }
 
-    public DartPerformanceDto(Long idPlayer, Long idGame, List<Integer> historiquePosition, Integer score,
-            Integer nombreTour, List<String> volees) {
+    public DartPerformanceDto(Long idPlayer, Long idGame, LinkedList<Integer> historiquePosition, Integer score,
+            Integer nombreTour, LinkedList<String> volees) {
         this.idPlayer = idPlayer;
         this.idGame = idGame;
         this.historiquePosition = historiquePosition;
@@ -45,11 +45,11 @@ public class DartPerformanceDto {
         this.idGame = idGame;
     }
 
-    public List<Integer> getHistoriquePosition() {
+    public LinkedList<Integer> getHistoriquePosition() {
         return historiquePosition;
     }
 
-    public void setHistoriquePosition(List<Integer> historiquePosition) {
+    public void setHistoriquePosition(LinkedList<Integer> historiquePosition) {
         this.historiquePosition = historiquePosition;
     }
 
@@ -69,11 +69,11 @@ public class DartPerformanceDto {
         this.nombreTour = nombreTour;
     }
 
-    public List<String> getVolees() {
+    public LinkedList<String> getVolees() {
         return volees;
     }
 
-    public void setVolees(List<String> volees) {
+    public void setVolees(LinkedList<String> volees) {
         this.volees = volees;
     }
 

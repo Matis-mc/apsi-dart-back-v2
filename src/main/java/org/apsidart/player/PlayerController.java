@@ -25,27 +25,27 @@ public class PlayerController {
     private static final Logger LOG = Logger.getLogger(PlayerController.class);
 
     @Inject
-    PlayerService ps;
+    PlayerService service;
     
     @POST
     public Long createPlayer(@Valid PlayerDto player){
-        return ps.createPlayer(player);
+        return service.createPlayer(player);
     }
 
     @GET
     public List<PlayerDto> getPlayers(){
-        return ps.getAllplayer();
+        return service.getAllplayer();
     }
 
     @GET
     @Path("/{id}")
     public PlayerDto getPlayerById(@PathParam("id") Long id){
-        return ps.getPlayerById(id);
+        return service.getPlayerById(id);
     }
 
     @DELETE
     @Path("/{id}")
     public boolean deletePlayer(@PathParam("id") Long id){
-        return ps.deletePlayerById(id);
+        return service.deletePlayerById(id);
     }
 }

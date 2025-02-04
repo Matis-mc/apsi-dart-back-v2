@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameDto;
+import org.apsidart.dart.game.dto.DartGameTourDto;
 
 import com.arjuna.ats.internal.arjuna.objectstore.jdbc.drivers.ibm_driver;
 
@@ -43,5 +44,11 @@ public class DartGameController {
     public DartGameDto getGameById(@PathParam("id") Long id){
         return service.getGameById(id);
     }    
+
+    @POST
+    @Path("/perform")
+    public String performOnGame(@Valid DartGameTourDto dto){
+        return service.performOnGame(dto);
+    }
     
 }

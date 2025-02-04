@@ -22,9 +22,10 @@ public class PlayerService {
 
     @Transactional
     public Long createPlayer(PlayerDto dto){
+        LOG.info("[START] Creation d'un nouveau joueur : " + dto.toString());
         PlayerEntity playerCreated = PlayerMapper.dtoToEntity(dto);
-        pr.persist(PlayerMapper.dtoToEntity(dto));
-        LOG.debug("Creation d'un nouveau joueur : " + playerCreated.toString());
+        pr.persistAndFlush(playerCreated);
+        LOG.info("[SUCCESS] Creation d'un nouveau joueur : " + playerCreated.toString());
         return playerCreated.getId();
     }
 

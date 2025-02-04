@@ -1,5 +1,6 @@
 package org.apsidart.dart.performance.entity;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -22,19 +23,19 @@ public class DartPerformanceEntity {
 
     private Long idGame;
 
-    private List<Integer> historiquePosition;    
+    private LinkedList<Integer> historiquePosition;    
 
     private Integer score;
 
     private Integer nombreTour;
 
-    private List<String> volees;
+    private LinkedList<String> volees;
 
     public DartPerformanceEntity() {
     }
 
-    public DartPerformanceEntity(Long idPlayer, Long idGame, List<Integer> historiquePosition,
-            Integer score, Integer nombreTour, List<String> volees) {
+    public DartPerformanceEntity(Long idPlayer, Long idGame, LinkedList<Integer> historiquePosition,
+            Integer score, Integer nombreTour, LinkedList<String> volees) {
         this.idPlayer = idPlayer;
         this.idGame = idGame;
         this.historiquePosition = historiquePosition;
@@ -67,11 +68,11 @@ public class DartPerformanceEntity {
         this.idGame = idGame;
     }
 
-    public List<Integer> getHistoriquePosition() {
+    public LinkedList<Integer> getHistoriquePosition() {
         return historiquePosition;
     }
 
-    public void setHistoriquePosition(List<Integer> historiquePosition) {
+    public void setHistoriquePosition(LinkedList<Integer> historiquePosition) {
         this.historiquePosition = historiquePosition;
     }
 
@@ -91,11 +92,11 @@ public class DartPerformanceEntity {
         this.nombreTour = nombreTour;
     }
 
-    public List<String> getVolees() {
+    public LinkedList<String> getVolees() {
         return volees;
     }
 
-    public void setVolees(List<String> volees) {
+    public void setVolees(LinkedList<String> volees) {
         this.volees = volees;
     }
 
