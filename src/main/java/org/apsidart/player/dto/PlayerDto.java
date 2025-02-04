@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 
 public record PlayerDto(
 
+    Long id,
+
     @NotBlank
     String firstName,
 
@@ -12,5 +14,7 @@ public record PlayerDto(
 
     @NotBlank
     String pseudo) {
+
+    
     
 }

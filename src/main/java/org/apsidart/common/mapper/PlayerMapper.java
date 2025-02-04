@@ -14,7 +14,7 @@ public class PlayerMapper {
 
     public static PlayerDto entityToDto(PlayerEntity pe){
 
-        return new PlayerDto(pe.getFirstName(), pe.getLastName(), pe.getPseudo());
+        return new PlayerDto(pe.getId(), pe.getFirstName(), pe.getLastName(), pe.getPseudo());
 
     }
 
