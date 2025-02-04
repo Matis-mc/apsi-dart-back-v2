@@ -10,6 +10,7 @@ import org.apsidart.dart.game.enumeration.StatutGameEnum;
 import org.apsidart.dart.game.mapper.DartGameMapper;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
+import org.apsidart.ia.IAService;
 import org.apsidart.player.PlayerService;
 import org.jboss.logging.Logger;
 
@@ -26,6 +27,9 @@ public class DartGameService {
 
     @Inject
     DartPerformanceService performanceService;
+
+    @Inject
+    IAService iaService;
 
     private static final Logger LOG = Logger.getLogger(DartGameService.class);
 
@@ -76,7 +80,17 @@ public class DartGameService {
         LOG.info("[START] Enregistrement d'un tour avec payload : " + dto.toString());
         dto.getPerformances().forEach(p -> performanceService.enregistrePerformanceForPlayer(p, dto.getIdJeu()));
         LOG.info("[SUCCESS] Enregistrement d'un tour");
-        return "ça me coupe la chique";
+        return iaService.getCommentaire(dto.getPerformances());
+    }
+
+    @Transactional
+    public String endGame(DartGameTourDto dto){
+        LOG.info("[START] Enregistrement du dernier tour avec payload : " + dto.toString());
+        dto.getPerformances().forEach(p -> performanceService.endGameForPlayer(p, dto.getIdJeu()));
+        DartGameEntity gameEntity = repository.findById(dto.getIdJeu());
+        gameEntity.setStatut(StatutGameEnum.COMPLETED.libelle);
+        repository.persist(gameEntity);
+        return iaService.getCommentaire(dto.getPerformances());
     }
     
 }

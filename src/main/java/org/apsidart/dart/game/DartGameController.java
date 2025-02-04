@@ -50,5 +50,11 @@ public class DartGameController {
     public String performOnGame(@Valid DartGameTourDto dto){
         return service.performOnGame(dto);
     }
+
+    @POST
+    @Path("/end")
+    public String endGame(@Valid DartGameTourDto dto){
+        return service.endGame(dto);
+    }
     
 }

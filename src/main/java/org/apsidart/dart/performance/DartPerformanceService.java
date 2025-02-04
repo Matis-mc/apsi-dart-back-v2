@@ -9,6 +9,7 @@ import org.apsidart.dart.game.dto.PlayerPeformanceDto;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 import org.apsidart.dart.performance.entity.DartPerformanceEntity;
 import org.apsidart.dart.performance.mapper.DartPerformanceMapper;
+import org.apsidart.ia.IAService;
 import org.apsidart.player.PlayerService;
 import org.apsidart.player.dto.PlayerDto;
 import org.jboss.logging.Logger;
@@ -54,6 +55,11 @@ public class DartPerformanceService {
         }
         repository.persistAndFlush(entity);
         LOG.info("[SUCCESS] Tour pris en compte pour le joueur " + dto.getPseudo());
+    }
+
+    public void endGameForPlayer(PlayerPeformanceDto dto, Long idGame){
+        this.enregistrePerformanceForPlayer(dto, idGame);
+        // todo : calculer stat
     }
 
     private boolean isNewTour(DartPerformanceEntity entity, PlayerPeformanceDto dto){
