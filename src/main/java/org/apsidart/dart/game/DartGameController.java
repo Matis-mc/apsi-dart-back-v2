@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameDto;
-import org.apsidart.dart.game.dto.DartGameTourDto;
-
-import com.arjuna.ats.internal.arjuna.objectstore.jdbc.drivers.ibm_driver;
+import org.apsidart.dart.game.dto.DartGameRoundDto;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -46,14 +44,14 @@ public class DartGameController {
     }    
 
     @POST
-    @Path("/perform")
-    public String performOnGame(@Valid DartGameTourDto dto){
+    @Path("/round")
+    public String performOnGame(@Valid DartGameRoundDto dto){
         return service.performOnGame(dto);
     }
 
     @POST
     @Path("/end")
-    public String endGame(@Valid DartGameTourDto dto){
+    public String endGame(@Valid DartGameRoundDto dto){
         return service.endGame(dto);
     }
     

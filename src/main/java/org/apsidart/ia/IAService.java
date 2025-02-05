@@ -29,9 +29,9 @@ public class IAService {
     }
 
     private String constructPromptFromContext(List<PlayerPeformanceDto> playerPeformanceDtos){
-        String prompt = "Tour " + playerPeformanceDtos.get(0).getNumeroTour() + ". ";
+        String prompt = "Tour " + playerPeformanceDtos.get(0).getNumberRound() + ". ";
         for (PlayerPeformanceDto p : playerPeformanceDtos){
-            prompt += p.getPseudo() + " a lancé " + describeVolee(p.getVolee()) + "et a " + p.getScore() + "points";  
+            prompt += p.getPseudo() + " a lancé " + describeVolee(p.getVolley()) + "et a " + p.getScore() + "points";  
         }
         LOG.warn(prompt);
         return prompt;

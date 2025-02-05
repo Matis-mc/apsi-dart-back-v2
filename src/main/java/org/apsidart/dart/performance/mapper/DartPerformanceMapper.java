@@ -6,11 +6,11 @@ import org.apsidart.dart.performance.entity.DartPerformanceEntity;
 public class DartPerformanceMapper {
 
     public static DartPerformanceDto entityToDto(DartPerformanceEntity entity){
-        return new DartPerformanceDto(  entity.getIdPlayer(),
+        return new DartPerformanceDto( entity.getIdPlayer(),
                                         entity.getIdGame(),
-                                        entity.getHistoriquePosition(),
-                                        entity.getScore(),
+                                        entity.getHistPosition(),
+                                        entity.getHistScore(),
                                         entity.getNombreTour(), 
-                                        entity.getVolees());}
+                                        entity.getVolleys());}
     
 }

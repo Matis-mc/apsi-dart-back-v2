@@ -13,15 +13,15 @@ public class DartGameCreationDto {
     CodeTypGameEnum typeGame;
 
     @NotBlank
-    String dateCreation;
+    String creationDate;
 
     @NotEmpty
     List<PlayerDto> players;
 
-    public DartGameCreationDto(@NotBlank CodeTypGameEnum typeGame, @NotBlank String dateCreation,
+    public DartGameCreationDto(@NotBlank CodeTypGameEnum typeGame, @NotBlank String creationDate,
             @NotEmpty List<PlayerDto> players) {
         this.typeGame = typeGame;
-        this.dateCreation = dateCreation;
+        this.creationDate = creationDate;
         this.players = players;
     }
 
@@ -33,12 +33,12 @@ public class DartGameCreationDto {
         this.typeGame = typeGame;
     }
 
-    public String getDateCreation() {
-        return dateCreation;
+    public String getCreationDate() {
+        return creationDate;
     }
 
-    public void setDateCreation(String dateCreation) {
-        this.dateCreation = dateCreation;
+    public void setCreationDate(String dateCreation) {
+        this.creationDate = dateCreation;
     }
 
     public List<PlayerDto> getPlayers() {

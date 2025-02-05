@@ -10,11 +10,9 @@ public record PlayerDto(
     String firstName,
 
     @NotBlank
-    String lastName,
+    String name,
 
     @NotBlank
     String pseudo) {
-
-    
     
 }

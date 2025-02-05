@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apsidart.dart.game.DartGameService;
 import org.apsidart.dart.game.dto.PlayerPeformanceDto;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 import org.apsidart.dart.performance.entity.DartPerformanceEntity;
 import org.apsidart.dart.performance.mapper.DartPerformanceMapper;
-import org.apsidart.ia.IAService;
 import org.apsidart.player.PlayerService;
 import org.apsidart.player.dto.PlayerDto;
 import org.jboss.logging.Logger;
@@ -41,17 +39,18 @@ public class DartPerformanceService {
             .orElseThrow((() -> new NotFoundException("Aucune performance n'a été enregistrée pour ce joueur " + dto.getIdPlayer())));
         if(isNewTour(entity, dto)){
             LOG.info("[DO] Ajout d'un nouveau tour pour le joueur " + dto.getPseudo());
-            entity.getHistoriquePosition().add(dto.getPosition());
+            entity.addPosition(dto.getPosition());
             entity.setNombreTour(entity.getNombreTour() + 1);
-            entity.setScore(dto.getScore());
-            entity.getVolees().add(dto.getVolee());
+            entity.addScore(dto.getScore());
+            entity.addVolley(dto.getVolley());
         } else {
             LOG.info("[DO] Modification du précédent tour pour le joueur " + dto.getPseudo());
-            entity.getHistoriquePosition().removeLast();
-            entity.getHistoriquePosition().add(dto.getPosition());
-            entity.setScore(dto.getScore());
-            entity.getVolees().removeLast();
-            entity.getVolees().add(dto.getVolee());
+            entity.getHistPosition().removeLast();
+            entity.addPosition(dto.getPosition());
+            entity.getHistScore().removeLast();
+            entity.addScore(dto.getScore());
+            entity.getVolleys().removeLast();
+            entity.addVolley(dto.getVolley());
         }
         repository.persistAndFlush(entity);
         LOG.info("[SUCCESS] Tour pris en compte pour le joueur " + dto.getPseudo());
@@ -63,10 +62,10 @@ public class DartPerformanceService {
     }
 
     private boolean isNewTour(DartPerformanceEntity entity, PlayerPeformanceDto dto){
-        if(entity.getNombreTour() == dto.getNumeroTour()){
+        if(entity.getNombreTour() == dto.getNumberRound()){
             return false;
         } 
-        if(entity.getNombreTour() > dto.getNumeroTour()){
+        if(entity.getNombreTour() > dto.getNumberRound()){
             throw new IllegalArgumentException("Le numéro du tour est incohérent");
         }
         return true;
@@ -78,7 +77,7 @@ public class DartPerformanceService {
                                                         idPlayer,
                                                         idGame,
                                                         new LinkedList<>(new ArrayList<Integer>(position)),
-                                                        0,
+                                                        new LinkedList<>(new ArrayList<Integer>(0)),
                                                         0,
                                                         new LinkedList<>());
         repository.persistAndFlush(performanceEntity);

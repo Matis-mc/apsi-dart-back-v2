@@ -11,16 +11,16 @@ public class PlayerPeformanceDto {
     String pseudo;
 
     @NotNull
-    Integer Score;
+    Integer score;
 
     @NotNull
     Integer position;
     
     @NotBlank
-    String volee;
+    String volley;
     
     @NotNull
-    Integer numeroTour;
+    Integer numberRound;
 
     public Long getIdPlayer() {
         return idPlayer;
@@ -39,11 +39,11 @@ public class PlayerPeformanceDto {
     }
 
     public Integer getScore() {
-        return Score;
+        return score;
     }
 
     public void setScore(Integer score) {
-        Score = score;
+        this.score = score;
     }
 
     public Integer getPosition() {
@@ -54,26 +54,26 @@ public class PlayerPeformanceDto {
         this.position = position;
     }
 
-    public String getVolee() {
-        return volee;
+    public String getVolley() {
+        return volley;
     }
 
-    public void setVolee(String volee) {
-        this.volee = volee;
+    public void setVolley(String volee) {
+        this.volley = volee;
     }
 
-    public Integer getNumeroTour() {
-        return numeroTour;
+    public Integer getNumberRound() {
+        return numberRound;
     }
 
-    public void setNumeroTour(Integer numeroTour) {
-        this.numeroTour = numeroTour;
+    public void setNumberRound(Integer numeroTour) {
+        this.numberRound = numeroTour;
     }
 
     @Override
     public String toString() {
-        return "PlayerPeformanceDto [idPlayer=" + idPlayer + ", pseudo=" + pseudo + ", Score=" + Score + ", position="
-                + position + ", volee=" + volee + ", numeroTour=" + numeroTour + "]";
+        return "PlayerPeformanceDto [idPlayer=" + idPlayer + ", pseudo=" + pseudo + ", Score=" + score + ", position="
+                + position + ", volee=" + volley + ", numeroTour=" + numberRound + "]";
     }
 
     

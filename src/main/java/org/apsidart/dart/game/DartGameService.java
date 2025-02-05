@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameDto;
-import org.apsidart.dart.game.dto.DartGameTourDto;
+import org.apsidart.dart.game.dto.DartGameRoundDto;
 import org.apsidart.dart.game.entity.DartGameEntity;
 import org.apsidart.dart.game.enumeration.StatutGameEnum;
 import org.apsidart.dart.game.mapper.DartGameMapper;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
+import org.apsidart.dart.stat.DartStatEnregistrementService;
 import org.apsidart.ia.IAService;
 import org.apsidart.player.PlayerService;
 import org.jboss.logging.Logger;
@@ -30,6 +31,9 @@ public class DartGameService {
 
     @Inject
     IAService iaService;
+
+    @Inject
+    DartStatEnregistrementService dartStatEnregistrementService;
 
     private static final Logger LOG = Logger.getLogger(DartGameService.class);
 
@@ -76,20 +80,26 @@ public class DartGameService {
         
     }
 
-    public String performOnGame(DartGameTourDto dto){
+    public String performOnGame(DartGameRoundDto dto){
         LOG.info("[START] Enregistrement d'un tour avec payload : " + dto.toString());
-        dto.getPerformances().forEach(p -> performanceService.enregistrePerformanceForPlayer(p, dto.getIdJeu()));
+        dto.getPerformances().forEach(p -> performanceService.enregistrePerformanceForPlayer(p, dto.getIdGame()));
         LOG.info("[SUCCESS] Enregistrement d'un tour");
         return iaService.getCommentaire(dto.getPerformances());
     }
 
     @Transactional
-    public String endGame(DartGameTourDto dto){
+    public String endGame(DartGameRoundDto dto){
+
         LOG.info("[START] Enregistrement du dernier tour avec payload : " + dto.toString());
-        dto.getPerformances().forEach(p -> performanceService.endGameForPlayer(p, dto.getIdJeu()));
-        DartGameEntity gameEntity = repository.findById(dto.getIdJeu());
+        dto.getPerformances().forEach(p -> performanceService.endGameForPlayer(p, dto.getIdGame()));
+        DartGameEntity gameEntity = repository.findById(dto.getIdGame());
         gameEntity.setStatut(StatutGameEnum.COMPLETED.libelle);
         repository.persist(gameEntity);
+        LOG.info("[SUCCESS] Enregistrement du dernier tour." );
+
+        List<DartPerformanceDto> performanceDtos = performanceService.getPerformanceByIdGame(dto.getIdGame());
+        dartStatEnregistrementService.majPlayersStat(performanceDtos, gameEntity.getType());       
+
         return iaService.getCommentaire(dto.getPerformances());
     }
     

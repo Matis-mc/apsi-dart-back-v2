@@ -23,25 +23,25 @@ public class DartPerformanceEntity {
 
     private Long idGame;
 
-    private LinkedList<Integer> historiquePosition;    
+    private LinkedList<Integer> histPosition;    
 
-    private Integer score;
+    private LinkedList<Integer> histScore;
 
     private Integer nombreTour;
 
-    private LinkedList<String> volees;
+    private LinkedList<String> volleys;
 
     public DartPerformanceEntity() {
     }
 
     public DartPerformanceEntity(Long idPlayer, Long idGame, LinkedList<Integer> historiquePosition,
-            Integer score, Integer nombreTour, LinkedList<String> volees) {
+    LinkedList<Integer> histScore, Integer nombreTour, LinkedList<String> volees) {
         this.idPlayer = idPlayer;
         this.idGame = idGame;
-        this.historiquePosition = historiquePosition;
-        this.score = score;
+        this.histPosition = historiquePosition;
+        this.histScore = histScore;
         this.nombreTour = nombreTour;
-        this.volees = volees;
+        this.volleys = volees;
     }
 
     public Long getId() {
@@ -68,20 +68,28 @@ public class DartPerformanceEntity {
         this.idGame = idGame;
     }
 
-    public LinkedList<Integer> getHistoriquePosition() {
-        return historiquePosition;
+    public LinkedList<Integer> getHistPosition() {
+        return histPosition;
     }
 
-    public void setHistoriquePosition(LinkedList<Integer> historiquePosition) {
-        this.historiquePosition = historiquePosition;
+    public void setHistPosition(LinkedList<Integer> historiquePosition) {
+        this.histPosition = historiquePosition;
     }
 
-    public Integer getScore() {
-        return score;
+    public void addPosition(Integer position){
+        this.histPosition.add(position);
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public LinkedList<Integer> getHistScore() {
+        return histScore;
+    }
+
+    public void setHistScore(LinkedList<Integer> score) {
+        this.histScore = score;
+    }
+
+    public void addScore(Integer score){
+        this.histScore.add(score);
     }
 
     public Integer getNombreTour() {
@@ -92,15 +100,16 @@ public class DartPerformanceEntity {
         this.nombreTour = nombreTour;
     }
 
-    public LinkedList<String> getVolees() {
-        return volees;
+    public LinkedList<String> getVolleys() {
+        return volleys;
     }
 
-    public void setVolees(LinkedList<String> volees) {
-        this.volees = volees;
+    public void setVolleys(LinkedList<String> volleys) {
+        this.volleys = volleys;
     }
 
-    
-
+    public void addVolley(String volley){
+        this.volleys.add(volley);
+    }
     
 }

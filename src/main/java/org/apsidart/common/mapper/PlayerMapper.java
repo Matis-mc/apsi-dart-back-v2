@@ -8,7 +8,7 @@ public class PlayerMapper {
 
     public static PlayerEntity dtoToEntity(PlayerDto pcd){
 
-        return new PlayerEntity(pcd.firstName(), pcd.lastName(), pcd.pseudo());
+        return new PlayerEntity(pcd.firstName(), pcd.name(), pcd.pseudo());
 
     }
 
