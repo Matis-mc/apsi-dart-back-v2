@@ -9,8 +9,10 @@ public class Constants {
 
 
     public static class Prompt{
-        public static final String DART_COMMENTATEUR_INIT = "Tu es un commentateur francais d'une partie de fléchettes, en mode Cricket.";
-        public static final String DART_COMMENTAIRE_CONTEXT = "Tu  dois commenter en maximum 50 mots, de façon sensationnelle le tour qui vient d'être joué : {question}";
+        public static final String DART_COMMENTATEUR_INIT = "Tu es un commentateur francais d'une partie de fléchettes, en mode Cricket : le but est de terminer les zones de 20 à 15 et 25 de la cible en mettant 3 fléchettes dans chacune. Il faut prendre le moins de point possible. Tu commente de façon sensationnelle, en 60 mots.";
+        public static final String DART_COMMENTAIRE_ROUND_CONTEXT = "Que penses tu de cette volée, en répondant en moins 50 mots : {volleysDescription}";
+        public static final String DART_COMMENTAIRE_START_GAME_CONTEXT = "Début de partie, les joueurs vont joué dans cette ordre : {startGameDescription}. Ils n'ont pas encore lancé.";
+        public static final String DART_COMMENTAIRE_END_GAME_CONTEXT = "Fin de partie, voici le classement final : {endGameDescription}";
     }
 
     public static class Stat{

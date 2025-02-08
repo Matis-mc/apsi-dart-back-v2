@@ -3,6 +3,7 @@ package org.apsidart.dart.game;
 import java.util.List;
 
 import org.apsidart.dart.game.dto.DartGameCreationDto;
+import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
 import org.apsidart.dart.game.dto.DartGameRoundDto;
 import org.apsidart.dart.game.entity.DartGameEntity;
@@ -38,7 +39,7 @@ public class DartGameService {
     private static final Logger LOG = Logger.getLogger(DartGameService.class);
 
     @Transactional
-    public Long createGame(DartGameCreationDto dto){
+    public DartGameCreationRetourDto createGame(DartGameCreationDto dto){
 
         LOG.info("[START] Creation d'une partie");
         DartGameEntity gameEntity = DartGameMapper.dtoToEntity(dto);
@@ -48,7 +49,8 @@ public class DartGameService {
         LOG.info("[START] Initialisation des performances de chaques joueurs de la partie " + gameEntity.getId());
         performanceService.createPerformanceForGame(gameEntity.getId(), dto.getPlayers());
         LOG.info("[SUCCESS] Initialisation des performances de chaques joueurs");
-        return gameEntity.getId();
+        String commentaire = iaService.getDartStartGameCommentaire(dto.getPlayers());
+        return new DartGameCreationRetourDto(gameEntity.getId(), commentaire);
 
     }
 
@@ -84,7 +86,7 @@ public class DartGameService {
         LOG.info("[START] Enregistrement d'un tour avec payload : " + dto.toString());
         dto.getPerformances().forEach(p -> performanceService.enregistrePerformanceForPlayer(p, dto.getIdGame()));
         LOG.info("[SUCCESS] Enregistrement d'un tour");
-        return iaService.getCommentaire(dto.getPerformances());
+        return iaService.getDartRoundCommentaire(dto.getPerformances());
     }
 
     @Transactional
@@ -100,7 +102,7 @@ public class DartGameService {
         List<DartPerformanceDto> performanceDtos = performanceService.getPerformanceByIdGame(dto.getIdGame());
         dartStatEnregistrementService.majPlayersStat(performanceDtos, gameEntity.getType());       
 
-        return iaService.getCommentaire(dto.getPerformances());
+        return iaService.getDartEndGameCommentaire(dto.getPerformances());
     }
     
 }
