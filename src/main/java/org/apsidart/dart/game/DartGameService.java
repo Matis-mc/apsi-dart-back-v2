@@ -2,6 +2,7 @@ package org.apsidart.dart.game;
 
 import java.util.List;
 
+import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
@@ -82,7 +83,7 @@ public class DartGameService {
         
     }
 
-    public String performOnGame(DartGameRoundDto dto){
+    public CommentDto performOnGame(DartGameRoundDto dto){
         LOG.info("[START] Enregistrement d'un tour avec payload : " + dto.toString());
         dto.getPerformances().forEach(p -> performanceService.enregistrePerformanceForPlayer(p, dto.getIdGame()));
         LOG.info("[SUCCESS] Enregistrement d'un tour");
@@ -90,7 +91,7 @@ public class DartGameService {
     }
 
     @Transactional
-    public String endGame(DartGameRoundDto dto){
+    public CommentDto endGame(DartGameRoundDto dto){
 
         LOG.info("[START] Enregistrement du dernier tour avec payload : " + dto.toString());
         dto.getPerformances().forEach(p -> performanceService.endGameForPlayer(p, dto.getIdGame()));

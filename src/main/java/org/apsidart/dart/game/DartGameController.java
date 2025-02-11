@@ -2,11 +2,11 @@ package org.apsidart.dart.game;
 
 import java.util.List;
 
+import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
 import org.apsidart.dart.game.dto.DartGameRoundDto;
-import org.apsidart.dart.game.entity.DartGameEntity;
 
 import io.quarkus.resteasy.reactive.links.InjectRestLinks;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -52,14 +52,14 @@ public class DartGameController {
     @POST
     @Path("/round")
     @InjectRestLinks
-    public String performOnGame(@Valid DartGameRoundDto dto){
+    public CommentDto performOnGame(@Valid DartGameRoundDto dto){
         return service.performOnGame(dto);
     }
 
     @POST
     @Path("/end")
     @InjectRestLinks
-    public String endGame(@Valid DartGameRoundDto dto){
+    public CommentDto endGame(@Valid DartGameRoundDto dto){
         return service.endGame(dto);
     }
     
