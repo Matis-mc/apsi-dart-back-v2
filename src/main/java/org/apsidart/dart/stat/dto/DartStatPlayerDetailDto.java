@@ -7,7 +7,7 @@ public class DartStatPlayerDetailDto {
     
     public String typeGame;
 
-    public List<Double> eloScore;
+    public List<Integer> eloScore;
 
     public Long idPlayer;
 
@@ -23,7 +23,7 @@ public class DartStatPlayerDetailDto {
 
     public Double nbVictory;
 
-    public DartStatPlayerDetailDto(String typeJeu, List<Double> eloScore, Long idPlayer,
+    public DartStatPlayerDetailDto(String typeJeu, List<Integer> eloScore, Long idPlayer,
             List<Double> avgPosition, List<Double> avgPoints, List<Double> pctVictoire, List<Double> avgNbDartCompleted,
             Double nbGame, Double nbVictoire) {
         this.typeGame = typeJeu;
@@ -65,15 +65,15 @@ public class DartStatPlayerDetailDto {
         this.typeGame = typeJeu;
     }
 
-    public List<Double> getEloScore() {
+    public List<Integer> getEloScore() {
         return eloScore;
     }
 
-    public void setEloScore(List<Double> eloScore) {
+    public void setEloScore(List<Integer> eloScore) {
         this.eloScore = eloScore;
     }
 
-    public void addEloScore(Double eloScore){
+    public void addEloScore(Integer eloScore){
         this.eloScore.add(eloScore);
     }
 
