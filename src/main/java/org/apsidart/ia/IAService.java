@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apsidart.dart.game.dto.PlayerPeformanceDto;
 import org.apsidart.dart.performance.DartPerformanceService;
+import org.apsidart.player.dto.PlayerDto;
 import org.jboss.logging.Logger;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -16,24 +18,63 @@ public class IAService {
     CommentateurService commentateurService;
 
     private static final Logger LOG = Logger.getLogger(DartPerformanceService.class);
+    private static String CORRECT_CHAR_REGEX = "^[a-zA-ZÀ-Ÿ-.!?]$";
 
-    
-    public String getCommentaire(List<PlayerPeformanceDto> playerPeformanceDtos){
+    public String getDartStartGameCommentaire(List<PlayerDto> playerDtos){
         try {
             LOG.info("[DO] Generation de commentaire avec les endpoint OVH : ");
-            return commentateurService.commentVolee(constructPromptFromContext(playerPeformanceDtos));
+            String commentaire = commentateurService.commentStartGame(constructStartGamePrompt(playerDtos));
+            return checkIaReturn(commentaire);
+        } catch (RuntimeException e) {
+            LOG.warn("Impossible d'appeler les endpoint OVH : " + e);
+            return "ça me coupe la chique !";
+        }
+    }
+    
+    public String getDartRoundCommentaire(List<PlayerPeformanceDto> playerPeformanceDtos){
+        try {
+            LOG.info("[DO] Generation de commentaire avec les endpoint OVH : ");
+            String commentaire = commentateurService.commentVolee(constructRoundPrompt(playerPeformanceDtos));
+            return checkIaReturn(commentaire);
         } catch (RuntimeException e) {
             LOG.warn("Impossible d'appeler les endpoint OVH : " + e);
             return "ça me coupe la chique !";
         }
     }
 
-    private String constructPromptFromContext(List<PlayerPeformanceDto> playerPeformanceDtos){
+    public String getDartEndGameCommentaire(List<PlayerPeformanceDto> playerPeformanceDtos){
+        try {
+            LOG.info("[DO] Generation de commentaire avec les endpoint OVH : ");
+            String commentaire = commentateurService.commentEndGame(constructEndGamePrompt(playerPeformanceDtos));
+            return checkIaReturn(commentaire);
+        } catch (RuntimeException e) {
+            LOG.warn("Impossible d'appeler les endpoint OVH : " + e);
+            return "ça me coupe la chique !";
+        }
+    }
+
+    private String constructEndGamePrompt(List<PlayerPeformanceDto> playerPeformanceDtos){
+        String prompt = "Dernier tour " + playerPeformanceDtos.get(0).getNumberRound() + ". ";
+        for (PlayerPeformanceDto p : playerPeformanceDtos){
+            prompt += p.getPseudo() + " termine " + p.getPosition() + " avec " + p.getScore() + "points, ";  
+        }
+        return prompt;
+    }
+
+    private String constructStartGamePrompt(List<PlayerDto> playerOrdered){
+        String prompt = "Premier tour. ";
+        for (PlayerDto p : playerOrdered){
+            int position = playerOrdered.indexOf(p) + 1;
+            prompt += p.pseudo() + " commence en position " + position + ", ";  
+        }
+        return prompt;
+    }
+
+    private String constructRoundPrompt(List<PlayerPeformanceDto> playerPeformanceDtos){
         String prompt = "Tour " + playerPeformanceDtos.get(0).getNumberRound() + ". ";
         for (PlayerPeformanceDto p : playerPeformanceDtos){
-            prompt += p.getPseudo() + " a lancé " + describeVolee(p.getVolley()) + "et a " + p.getScore() + "points";  
+            prompt += p.getPseudo() + " a lancé " + describeVolee(p.getVolley()) + "et a " + p.getScore() + "points, ";  
         }
-        LOG.warn(prompt);
         return prompt;
     }
 
@@ -51,6 +92,25 @@ public class IAService {
             voleeDescription += ", ";
         }
         return voleeDescription;
+    }
+
+    /*
+     * On vérifie que le retour pourra bien être interprété comme un String
+     * Le llm peut parfois rajouter des caractères incompatibles au début et/ou a la fin des commentaires.
+     */
+    private String checkIaReturn(String iaReturn){
+        String firstChar = iaReturn.substring(0, 1);
+        while(!firstChar.matches(CORRECT_CHAR_REGEX)){
+            iaReturn = iaReturn.substring(1);
+            firstChar = iaReturn.substring(0, 1);
+        }
+        String lastChar = iaReturn.substring(iaReturn.length() - 1);
+        while(!lastChar.matches(CORRECT_CHAR_REGEX)){
+            iaReturn = iaReturn.substring(0, iaReturn.length() - 1);
+            lastChar = iaReturn.substring(iaReturn.length() - 1);
+        }
+        return iaReturn;
+        
     }
     
 }
