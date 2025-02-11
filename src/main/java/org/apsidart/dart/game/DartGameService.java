@@ -2,6 +2,7 @@ package org.apsidart.dart.game;
 
 import java.util.List;
 
+import org.apsidart.common.exception.InvalidStatutGame;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
@@ -84,6 +85,8 @@ public class DartGameService {
 
     public String performOnGame(DartGameRoundDto dto){
         LOG.info("[START] Enregistrement d'un tour avec payload : " + dto.toString());
+        DartGameEntity gameEntity = repository.findById(dto.getIdGame());
+        checkStatutGame(gameEntity, List.of(StatutGameEnum.IN_PROGRESS, StatutGameEnum.CREATION));
         dto.getPerformances().forEach(p -> performanceService.enregistrePerformanceForPlayer(p, dto.getIdGame()));
         LOG.info("[SUCCESS] Enregistrement d'un tour");
         return iaService.getDartRoundCommentaire(dto.getPerformances());
@@ -93,8 +96,9 @@ public class DartGameService {
     public String endGame(DartGameRoundDto dto){
 
         LOG.info("[START] Enregistrement du dernier tour avec payload : " + dto.toString());
-        dto.getPerformances().forEach(p -> performanceService.endGameForPlayer(p, dto.getIdGame()));
         DartGameEntity gameEntity = repository.findById(dto.getIdGame());
+        checkStatutGame(gameEntity, List.of(StatutGameEnum.IN_PROGRESS));
+        dto.getPerformances().forEach(p -> performanceService.endGameForPlayer(p, dto.getIdGame()));
         gameEntity.setStatut(StatutGameEnum.COMPLETED.libelle);
         repository.persist(gameEntity);
         LOG.info("[SUCCESS] Enregistrement du dernier tour." );
@@ -103,6 +107,20 @@ public class DartGameService {
         dartStatEnregistrementService.majPlayersStat(performanceDtos, gameEntity.getType());       
 
         return iaService.getDartEndGameCommentaire(dto.getPerformances());
+    }
+
+    @Transactional
+    public void deleteGame(Long idGame){
+        DartGameEntity gameEntity = repository.findById(idGame);
+        gameEntity.setStatut(StatutGameEnum.DELETED.libelle);
+        repository.persistAndFlush(gameEntity);
+
+    }
+
+    private void checkStatutGame(DartGameEntity gameEntity, List<StatutGameEnum> validStatut){
+        if(validStatut.stream().noneMatch(statut -> statut.equals(gameEntity.getStatut()))){
+            throw new InvalidStatutGame(gameEntity.getId(), gameEntity.getStatut());
+        }
     }
     
 }

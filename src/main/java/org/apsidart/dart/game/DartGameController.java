@@ -15,6 +15,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -66,14 +67,21 @@ public class DartGameController {
         return service.endGame(dto);
     }
 
+    @DELETE
+    @Path("/{id}")
+    public void deleteGameById(@PathParam("id") Long id){
+        service.deleteGame(id);
+    }    
+
+
     private <T> HalResource<T> getHalResourceFromContent(T content, @Nullable Long idContent){
         HalResource<T> halResource = new HalResource<T>();
         halResource.setContent(content);
         halResource.addLink("create", uriInfo.getAbsolutePath().toString());
         halResource.addLink("collection", uriInfo.getAbsolutePath().toString());
         if(idContent != null ){
-        halResource.addLink("self", uriInfo.getAbsolutePath() + "/" + idContent);
-        halResource.addLink("delete", uriInfo.getAbsolutePath() + "/" + idContent);
+            halResource.addLink("self", uriInfo.getAbsolutePath() + "/" + idContent);
+            halResource.addLink("delete", uriInfo.getAbsolutePath() + "/" + idContent);
         }
         return halResource;
     }
@@ -82,20 +90,20 @@ public class DartGameController {
         return new HalLink(uriInfo.getAbsolutePath().toString());
     }
 
-    public HalLink getLinkRoundDartGame(){
-        return new HalLink(uriInfo.getAbsolutePath().toString() + "/round");
-    }
-
-    public HalLink getLinkEndDartGame(){
-        return new HalLink(uriInfo.getAbsolutePath().toString() + "/end");
-    }
-
     public HalLink getLinkSelfGame(Long id){
         return new HalLink(uriInfo.getAbsolutePath().toString() + "/" + id);
     }
 
     public HalLink getLinkAllDartGame(){
         return new HalLink(uriInfo.getAbsolutePath().toString());
+    }
+    
+    private HalLink getLinkRoundDartGame(){
+        return new HalLink(uriInfo.getAbsolutePath().toString() + "/round");
+    }
+
+    private HalLink getLinkEndDartGame(){
+        return new HalLink(uriInfo.getAbsolutePath().toString() + "/end");
     }
     
 }
