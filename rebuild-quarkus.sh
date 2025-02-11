@@ -2,7 +2,7 @@
 
 docker compose down
 
-rm ./target/apsidart-*
+rm ./target/apsi-dart-*
 
 ./mvnw clean package
 
