@@ -63,7 +63,7 @@ public class DartRechercheStatService {
             throw new NotFoundException("Aucune statistique n'est associé au player : " + idPlayer);
         }
         stats.forEach( s -> {
-            dto.addEloScore(s.getEloScore());
+            dto.addEloScore(s.getEloScore().intValue());
             dto.addAvgPosition(s.getAvgPosition().getValue());
             dto.addAvgPoint(s.getAvgPoints().getValue());
             dto.addPctVictoire(s.getPctVictoire().getValue());
