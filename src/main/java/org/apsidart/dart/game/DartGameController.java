@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apsidart.common.hal.HalLink;
 import org.apsidart.common.hal.HalResource;
+import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
@@ -57,13 +58,15 @@ public class DartGameController {
 
     @POST
     @Path("/round")
-    public String performOnGame(@Valid DartGameRoundDto dto){
+    @InjectRestLinks
+    public CommentDto performOnGame(@Valid DartGameRoundDto dto){
         return service.performOnGame(dto);
     }
 
     @POST
     @Path("/end")
-    public String endGame(@Valid DartGameRoundDto dto){
+    @InjectRestLinks
+    public CommentDto endGame(@Valid DartGameRoundDto dto){
         return service.endGame(dto);
     }
 

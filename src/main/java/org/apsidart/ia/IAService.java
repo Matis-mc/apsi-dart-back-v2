@@ -2,12 +2,12 @@ package org.apsidart.ia;
 
 import java.util.List;
 
+import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.PlayerPeformanceDto;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.player.dto.PlayerDto;
 import org.jboss.logging.Logger;
 
-import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -31,25 +31,25 @@ public class IAService {
         }
     }
     
-    public String getDartRoundCommentaire(List<PlayerPeformanceDto> playerPeformanceDtos){
+    public CommentDto getDartRoundCommentaire(List<PlayerPeformanceDto> playerPeformanceDtos){
         try {
             LOG.info("[DO] Generation de commentaire avec les endpoint OVH : ");
             String commentaire = commentateurService.commentVolee(constructRoundPrompt(playerPeformanceDtos));
-            return checkIaReturn(commentaire);
+            return new CommentDto(checkIaReturn(commentaire));
         } catch (RuntimeException e) {
             LOG.warn("Impossible d'appeler les endpoint OVH : " + e);
-            return "ça me coupe la chique !";
+            return new CommentDto("ça me coupe la chique !");
         }
     }
 
-    public String getDartEndGameCommentaire(List<PlayerPeformanceDto> playerPeformanceDtos){
+    public CommentDto getDartEndGameCommentaire(List<PlayerPeformanceDto> playerPeformanceDtos){
         try {
             LOG.info("[DO] Generation de commentaire avec les endpoint OVH : ");
             String commentaire = commentateurService.commentEndGame(constructEndGamePrompt(playerPeformanceDtos));
-            return checkIaReturn(commentaire);
+            return new CommentDto(checkIaReturn(commentaire));
         } catch (RuntimeException e) {
             LOG.warn("Impossible d'appeler les endpoint OVH : " + e);
-            return "ça me coupe la chique !";
+            return new CommentDto("ça me coupe la chique !");
         }
     }
 

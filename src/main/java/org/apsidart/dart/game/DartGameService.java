@@ -3,6 +3,7 @@ package org.apsidart.dart.game;
 import java.util.List;
 
 import org.apsidart.common.exception.InvalidStatutGame;
+import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
@@ -83,7 +84,7 @@ public class DartGameService {
         
     }
 
-    public String performOnGame(DartGameRoundDto dto){
+    public CommentDto performOnGame(DartGameRoundDto dto){
         LOG.info("[START] Enregistrement d'un tour avec payload : " + dto.toString());
         DartGameEntity gameEntity = repository.findById(dto.getIdGame());
         checkStatutGame(gameEntity, List.of(StatutGameEnum.IN_PROGRESS, StatutGameEnum.CREATION));
@@ -93,7 +94,7 @@ public class DartGameService {
     }
 
     @Transactional
-    public String endGame(DartGameRoundDto dto){
+    public CommentDto endGame(DartGameRoundDto dto){
 
         LOG.info("[START] Enregistrement du dernier tour avec payload : " + dto.toString());
         DartGameEntity gameEntity = repository.findById(dto.getIdGame());
