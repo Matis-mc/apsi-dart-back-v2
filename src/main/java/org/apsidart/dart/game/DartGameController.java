@@ -1,6 +1,8 @@
 package org.apsidart.dart.game;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apsidart.common.hal.HalLink;
 import org.apsidart.common.hal.HalResource;
@@ -58,14 +60,12 @@ public class DartGameController {
 
     @POST
     @Path("/round")
-    @InjectRestLinks
     public CommentDto performOnGame(@Valid DartGameRoundDto dto){
         return service.performOnGame(dto);
     }
 
     @POST
     @Path("/end")
-    @InjectRestLinks
     public CommentDto endGame(@Valid DartGameRoundDto dto){
         return service.endGame(dto);
     }
@@ -87,6 +87,13 @@ public class DartGameController {
             halResource.addLink("delete", uriInfo.getAbsolutePath() + "/" + idContent);
         }
         return halResource;
+    }
+
+    public Map<String, HalLink> getPublicHalLinks(){
+        Map<String, HalLink> links = new HashMap<>();
+        links.put("create", new HalLink(uriInfo.getAbsolutePath().toString()));
+        links.put("collection", new HalLink(uriInfo.getAbsolutePath().toString()));
+        return links;
     }
 
     public HalLink getLinkStartDartGame(){

@@ -1,15 +1,15 @@
 package org.apsidart.player;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apsidart.common.hal.HalLink;
 import org.apsidart.common.hal.HalResource;
 import org.apsidart.player.dto.PlayerDto;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.common.util.RestMediaType;
 
-import io.quarkus.hal.HalEntityWrapper;
-import io.quarkus.hal.HalService;
-import io.quarkus.hal.HalWrapper;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -67,6 +67,13 @@ public class PlayerController {
     @Produces({ MediaType.APPLICATION_JSON, RestMediaType.APPLICATION_HAL_JSON })
     public HalResource<Boolean> deletePlayer(@PathParam("id") Long id){
         return getHalResourceFromContent(service.deletePlayerById(id), null);
+    }
+
+    public Map<String, HalLink> getPublicHalLinks(){
+        Map<String, HalLink> links = new HashMap<>();
+        links.put("create", new HalLink(uriInfo.getAbsolutePath().toString()));
+        links.put("collection", new HalLink(uriInfo.getAbsolutePath().toString()));
+        return links;
     }
 
     private <T> HalResource<T> getHalResourceFromContent(T content, @Nullable Long idContent){
