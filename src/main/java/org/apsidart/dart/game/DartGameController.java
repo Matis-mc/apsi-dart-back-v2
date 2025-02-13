@@ -31,34 +31,29 @@ public class DartGameController {
     DartGameService service;
 
     @POST
-    @InjectRestLinks
     public DartGameCreationRetourDto createGame(@Valid DartGameCreationDto dto){
         return service.createGame(dto);
     }
 
     @GET
-    @InjectRestLinks
     public List<DartGameDto> getAllGame(){
         return service.getAllGame();
     }
 
     @GET
     @Path("/{id}")
-    @InjectRestLinks
     public DartGameDto getGameById(@PathParam("id") Long id){
         return service.getGameById(id);
     }    
 
     @POST
     @Path("/round")
-    @InjectRestLinks
     public CommentDto performOnGame(@Valid DartGameRoundDto dto){
         return service.performOnGame(dto);
     }
 
     @POST
     @Path("/end")
-    @InjectRestLinks
     public CommentDto endGame(@Valid DartGameRoundDto dto){
         return service.endGame(dto);
     }
