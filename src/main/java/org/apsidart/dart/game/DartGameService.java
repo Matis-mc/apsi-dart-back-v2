@@ -1,25 +1,34 @@
 package org.apsidart.dart.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apsidart.common.exception.InvalidStatutGameException;
 import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
+import org.apsidart.dart.game.dto.DartGameResumeDto;
 import org.apsidart.dart.game.dto.DartGameRoundDto;
+import org.apsidart.dart.game.dto.DartRoundResumeDto;
 import org.apsidart.dart.game.entity.DartGameEntity;
 import org.apsidart.dart.game.enumeration.StatutGameEnum;
 import org.apsidart.dart.game.mapper.DartGameMapper;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 import org.apsidart.dart.stat.DartStatEnregistrementService;
+
+import static org.apsidart.dart.game.enumeration.StatutGameEnum.CREATION;
+import static org.apsidart.dart.game.enumeration.StatutGameEnum.IN_PROGRESS;
+
 import org.apsidart.ia.IAService;
-import org.apsidart.player.PlayerService;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
@@ -44,7 +53,7 @@ public class DartGameService {
 
         LOG.info("[START] Creation d'une partie");
         DartGameEntity gameEntity = DartGameMapper.dtoToEntity(dto);
-        gameEntity.setStatut(StatutGameEnum.IN_PROGRESS.libelle);
+        gameEntity.setStatut(StatutGameEnum.CREATION.libelle);
         repository.persistAndFlush(gameEntity);
         LOG.info("[SUCCESS] Creation d'une partie");
         LOG.info("[START] Initialisation des performances de chaques joueurs de la partie " + gameEntity.getId());
@@ -83,8 +92,12 @@ public class DartGameService {
         
     }
 
+    @Transactional
     public CommentDto performOnGame(DartGameRoundDto dto){
         LOG.info("[START] Enregistrement d'un tour avec payload : " + dto.toString());
+        DartGameEntity game = checkStatuGame(dto.getIdGame(), List.of(IN_PROGRESS.libelle, CREATION.libelle));
+        game.setStatut(IN_PROGRESS.libelle);
+        repository.persist(game);
         dto.getPerformances().forEach(p -> performanceService.enregistrePerformanceForPlayer(p, dto.getIdGame()));
         LOG.info("[SUCCESS] Enregistrement d'un tour");
         return iaService.getDartRoundCommentaire(dto.getPerformances());
@@ -92,10 +105,9 @@ public class DartGameService {
 
     @Transactional
     public CommentDto endGame(DartGameRoundDto dto){
-
         LOG.info("[START] Enregistrement du dernier tour avec payload : " + dto.toString());
+        DartGameEntity gameEntity = checkStatuGame(dto.getIdGame(), IN_PROGRESS.libelle);
         dto.getPerformances().forEach(p -> performanceService.endGameForPlayer(p, dto.getIdGame()));
-        DartGameEntity gameEntity = repository.findById(dto.getIdGame());
         gameEntity.setStatut(StatutGameEnum.COMPLETED.libelle);
         repository.persist(gameEntity);
         LOG.info("[SUCCESS] Enregistrement du dernier tour." );
@@ -104,6 +116,37 @@ public class DartGameService {
         dartStatEnregistrementService.majPlayersStat(performanceDtos, gameEntity.getType());       
 
         return iaService.getDartEndGameCommentaire(dto.getPerformances());
+    }
+
+    /*
+     * On recupère l'ensemble des coups joués dans une partie en cours, afin de pouvoir la reprendre.
+     * On récupère pour chaque round, une map qui associe le player à sa volée.
+     */
+    public DartGameResumeDto getResumeGame(Long id){
+        checkStatuGame(id, IN_PROGRESS.libelle);
+        LOG.info("[START] Récupération de l'état de la partie : " + id);
+        List<DartRoundResumeDto> roundsResume = new ArrayList<>();
+        List<DartPerformanceDto> performances = performanceService.getPerformanceByIdGame(id);
+        LOG.info("performances : " + performances);
+        int numberRound = performances.get(0).getNombreTour();
+        for(int i = 0; i < numberRound; i++){
+            roundsResume.add(DartGameMapper.listPerformanceToResumeRound(performances, i));
+        }
+        LOG.info("[SUCCESS] Récupération de l'état de la partie." );
+        return new DartGameResumeDto(roundsResume);
+
+    }
+
+    private DartGameEntity checkStatuGame(Long idGame, @NotBlank String statutAuthorized){
+        return checkStatuGame(idGame, List.of(statutAuthorized));
+    }
+
+    private DartGameEntity checkStatuGame(Long idGame, @NotEmpty List<String> statutAuthorized){
+        DartGameEntity game = repository.findById(idGame);
+        if(statutAuthorized.stream().anyMatch(s -> s.equals(game.getStatut()))){
+            return game;
+        }
+        throw new InvalidStatutGameException(game.getStatut());
     }
     
 }
