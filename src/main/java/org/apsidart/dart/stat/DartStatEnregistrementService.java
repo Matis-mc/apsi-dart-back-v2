@@ -66,7 +66,7 @@ public class DartStatEnregistrementService {
     }
 
     private DartPerformanceDto getPerformanceFromListWithIdPlayer(List<DartPerformanceDto> performances, Long idPlayer){
-        return performances.stream().filter(p -> p.getIdPlayer() == idPlayer).findFirst().get();
+        return performances.stream().filter(p -> p.getIdPlayer().equals(idPlayer)).findFirst().get();
     }
     
 
