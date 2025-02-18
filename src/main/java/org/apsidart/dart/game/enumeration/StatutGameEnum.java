@@ -4,7 +4,8 @@ public enum StatutGameEnum {
 
     CREATION("CREATION"),
     IN_PROGRESS("IN_PROGRESS"),
-    COMPLETED("COMPLETED");
+    COMPLETED("COMPLETED"),
+    DELETED("DELETED");
 
 
     public final String libelle;

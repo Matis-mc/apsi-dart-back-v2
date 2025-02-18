@@ -122,9 +122,10 @@ public class DartStatEnregistrementService {
     }
 
     private AvgStat getNewAvgStatFromOld(AvgStat avgStat, double newValue){
+        double poid = avgStat.getPoid() + 1d;
         return new AvgStat(
-                avgStat.getPoid() + 1d,
-                ((avgStat.getValue())*(avgStat.getPoid()) + newValue ) / (avgStat.getPoid() + 1d),
+            poid,
+            ((avgStat.getValue())*(poid) + newValue ) / poid,
                 avgStat.getLabel());
     }
 
@@ -132,9 +133,10 @@ public class DartStatEnregistrementService {
         if(newValue > 1){
             newValue = newValue / 100d;
         }
+        double poid = pctStat.getPoid() + 1d;
         return new PctStat(
-                pctStat.getPoid() + 1d,
-                ((pctStat.getValue())*(pctStat.getPoid()) + newValue ) / (pctStat.getPoid() + 1d),
+                poid,
+                ((pctStat.getValue())*(poid) + newValue ) / (poid),
                 pctStat.getLabel());
     }
 

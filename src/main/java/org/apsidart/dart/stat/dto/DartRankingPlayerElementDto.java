@@ -6,7 +6,7 @@ public record DartRankingPlayerElementDto(
     String lastName,
     String pseudo,
     Integer elo,
-    Integer nbVictoty,
+    Integer nbVictory,
     Integer nbGame
 ) {
     

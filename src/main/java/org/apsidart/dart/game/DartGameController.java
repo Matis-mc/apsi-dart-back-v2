@@ -6,12 +6,13 @@ import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
+import org.apsidart.dart.game.dto.DartGameResumeDto;
 import org.apsidart.dart.game.dto.DartGameRoundDto;
 
-import io.quarkus.resteasy.reactive.links.InjectRestLinks;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -31,34 +32,35 @@ public class DartGameController {
     DartGameService service;
 
     @POST
-    @InjectRestLinks
     public DartGameCreationRetourDto createGame(@Valid DartGameCreationDto dto){
         return service.createGame(dto);
     }
 
     @GET
-    @InjectRestLinks
     public List<DartGameDto> getAllGame(){
         return service.getAllGame();
     }
 
     @GET
     @Path("/{id}")
-    @InjectRestLinks
-    public DartGameDto getGameById(@PathParam("id") Long id){
+    public DartGameDto getGameById(@NotNull @PathParam("id") Long id){
         return service.getGameById(id);
-    }    
+    }  
+    
+    @GET
+    @Path("/resume/{id}")
+    public DartGameResumeDto getResumeGameById(@NotNull @PathParam("id") Long id){
+        return service.getResumeGame(id);
+    } 
 
     @POST
     @Path("/round")
-    @InjectRestLinks
     public CommentDto performOnGame(@Valid DartGameRoundDto dto){
         return service.performOnGame(dto);
     }
 
     @POST
     @Path("/end")
-    @InjectRestLinks
     public CommentDto endGame(@Valid DartGameRoundDto dto){
         return service.endGame(dto);
     }
