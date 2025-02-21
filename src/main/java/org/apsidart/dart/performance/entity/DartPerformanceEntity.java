@@ -1,7 +1,6 @@
 package org.apsidart.dart.performance.entity;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -15,10 +15,10 @@ import jakarta.inject.Inject;
 public class IAService {
 
     @Inject                                            
-    CommentateurService commentateurService;
+    private CommentateurService commentateurService;
 
     private static final Logger LOG = Logger.getLogger(DartPerformanceService.class);
-    private static String CORRECT_CHAR_REGEX = "^[a-zA-ZÀ-Ÿ-.!?]$";
+    private static final String CORRECT_CHAR_REGEX = "^[a-zA-ZÀ-Ÿ-.!?]$";
 
     public String getDartStartGameCommentaire(List<PlayerDto> playerDtos){
         try {
@@ -110,7 +110,5 @@ public class IAService {
             lastChar = iaReturn.substring(iaReturn.length() - 1);
         }
         return iaReturn;
-        
     }
-    
 }

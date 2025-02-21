@@ -5,22 +5,22 @@ import jakarta.validation.constraints.NotNull;
 
 public class PlayerPeformanceDto {
     @NotNull
-    Long idPlayer;
+    private Long idPlayer;
     
     @NotBlank
-    String pseudo;
+    private String pseudo;
 
     @NotNull
-    Integer score;
+    private Integer score;
 
     @NotNull
-    Integer position;
+    private Integer position;
     
     @NotBlank
-    String volley;
+    private String volley;
     
     @NotNull
-    Integer numberRound;
+    private Integer numberRound;
 
     public Long getIdPlayer() {
         return idPlayer;
@@ -72,11 +72,12 @@ public class PlayerPeformanceDto {
 
     @Override
     public String toString() {
-        return "PlayerPeformanceDto [idPlayer=" + idPlayer + ", pseudo=" + pseudo + ", Score=" + score + ", position="
-                + position + ", volee=" + volley + ", numeroTour=" + numberRound + "]";
+        return new StringBuilder("PlayerPeformanceDto [idPlayer=").append(idPlayer)
+            .append(", pseudo=").append(pseudo)
+            .append(", Score=").append(score)
+            .append(", position=").append(position)
+            .append(", volee=").append(volley)
+            .append(", numeroTour=").append(numberRound)
+            .append("]").toString();
     }
-
-    
-    
-
 }

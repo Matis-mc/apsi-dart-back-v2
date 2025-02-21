@@ -5,23 +5,23 @@ import java.util.List;
 
 public class DartStatPlayerDetailDto {
     
-    public String typeGame;
+    private String typeGame;
 
-    public List<Integer> eloScore;
+    private List<Integer> eloScore;
 
-    public Long idPlayer;
+    private Long idPlayer;
 
-    public List<Double> avgPosition;
+    private List<Double> avgPosition;
 
-    public List<Double> avgPoints;
+    private List<Double> avgPoints;
 
-    public List<Double> pctVictory;
+    private List<Double> pctVictory;
 
-    public List<Double> avgNbDartCompleted;
+    private List<Double> avgNbDartCompleted;
 
-    public Double nbGame;
+    private Double nbGame;
 
-    public Double nbVictory;
+    private Double nbVictory;
 
     public DartStatPlayerDetailDto(String typeJeu, List<Integer> eloScore, Long idPlayer,
             List<Double> avgPosition, List<Double> avgPoints, List<Double> pctVictoire, List<Double> avgNbDartCompleted,
@@ -152,13 +152,16 @@ public class DartStatPlayerDetailDto {
 
     @Override
     public String toString() {
-        return "DartStatPlayerDetailDto [typeJeu=" + typeGame + ", eloScore=" + eloScore + ", idPlayer=" + idPlayer
-                + ", avgPosition=" + avgPosition + ", avgPoints=" + avgPoints + ", pctVictoire=" + pctVictory
-                + ", avgNbDartCompleted=" + avgNbDartCompleted + ", nbGame=" + nbGame + ", nbVictoire=" + nbVictory
-                + "]";
+        return new StringBuilder("DartStatPlayerDetailDto [typeJeu=").append(typeGame)
+        .append(", eloScore=").append(eloScore)
+        .append(", idPlayer=").append(idPlayer)
+        .append(", avgPosition=").append(avgPosition)
+        .append(", avgPoints=").append(avgPoints)
+        .append(", pctVictoire=").append(pctVictory)
+        .append(", avgNbDartCompleted=").append(avgNbDartCompleted)
+        .append(", nbGame=").append(nbGame)
+        .append(", nbVictoire=").append(nbVictory)
+        .append("]")
+        .toString();
     }
-
-    
-    
-    
 }

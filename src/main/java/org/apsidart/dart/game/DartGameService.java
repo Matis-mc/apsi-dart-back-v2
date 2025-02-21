@@ -1,5 +1,8 @@
 package org.apsidart.dart.game;
 
+import static org.apsidart.dart.game.enumeration.StatutGameEnum.CREATION;
+import static org.apsidart.dart.game.enumeration.StatutGameEnum.IN_PROGRESS;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +20,6 @@ import org.apsidart.dart.game.mapper.DartGameMapper;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 import org.apsidart.dart.stat.DartStatEnregistrementService;
-
-import static org.apsidart.dart.game.enumeration.StatutGameEnum.CREATION;
-import static org.apsidart.dart.game.enumeration.StatutGameEnum.IN_PROGRESS;
-
 import org.apsidart.ia.IAService;
 import org.jboss.logging.Logger;
 
@@ -35,16 +34,16 @@ import jakarta.ws.rs.NotFoundException;
 public class DartGameService {
 
     @Inject
-    DartGameRepository repository;
+    private DartGameRepository repository;
 
     @Inject
-    DartPerformanceService performanceService;
+    private DartPerformanceService performanceService;
 
     @Inject
-    IAService iaService;
+    private IAService iaService;
 
     @Inject
-    DartStatEnregistrementService dartStatEnregistrementService;
+    private DartStatEnregistrementService dartStatEnregistrementService;
 
     private static final Logger LOG = Logger.getLogger(DartGameService.class);
 

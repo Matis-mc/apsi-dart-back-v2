@@ -22,8 +22,6 @@ public class DartGameDto {
         this.date = date;
     }
 
-    
-
     public DartGameDto(Long id, String statut, String typeGame, LocalDate date) {
         this.id = id;
         this.statut = statut;
@@ -64,13 +62,12 @@ public class DartGameDto {
 
     @Override
     public String toString() {
-        return "DartGameDto [id=" + id + ", statut=" + statut + ", typeGame=" + typeGame + ", date=" + date
-                + ", performances=" + performances + "]";
+        return new StringBuilder("DartGameDto [id=")
+            .append(id)
+            .append(", statut=").append(statut)
+            .append(", typeGame=").append(typeGame)
+            .append(", date=").append(date)
+            .append(", performances=").append(performances)
+            .append("]").toString();
     }
-
-    
-
-
-    
-    
 }

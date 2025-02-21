@@ -29,7 +29,7 @@ import jakarta.ws.rs.core.MediaType;
 public class DartGameController {
 
     @Inject
-    DartGameService service;
+    private DartGameService service;
 
     @POST
     public DartGameCreationRetourDto createGame(@Valid DartGameCreationDto dto){

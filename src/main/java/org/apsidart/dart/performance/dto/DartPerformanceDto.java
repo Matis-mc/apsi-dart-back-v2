@@ -94,6 +94,4 @@ public class DartPerformanceDto {
     public void setElo(Double elo) {
         this.elo = elo;
     }
-   
-    
 }

@@ -10,13 +10,13 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class DartGameCreationDto {
 
-    CodeTypGameEnum typeGame;
+    private CodeTypGameEnum typeGame;
 
     @NotBlank
-    String creationDate;
+    private String creationDate;
 
     @NotEmpty
-    List<PlayerDto> players;
+    private List<PlayerDto> players;
 
     public DartGameCreationDto(@NotBlank CodeTypGameEnum typeGame, @NotBlank String creationDate,
             @NotEmpty List<PlayerDto> players) {
@@ -48,9 +48,4 @@ public class DartGameCreationDto {
     public void setPlayers(List<PlayerDto> players) {
         this.players = players;
     }
-
-    
-
-
-    
 }

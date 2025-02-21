@@ -6,25 +6,25 @@ public class DartStatPlayerDto {
     
     private Long id;  
 
-    public String typeGame;
+    private String typeGame;
 
-    public Double eloScore;
+    private Double eloScore;
 
-    public Long idPlayer;
+    private Long idPlayer;
 
-    public Timestamp date;
+    private Timestamp date;
 
-    public Double avgPosition;
+    private Double avgPosition;
 
-    public Double avgPoints;
+    private Double avgPoints;
 
-    public Double pctVictory;
+    private Double pctVictory;
 
-    public Double avgNbDartCompleted;
+    private Double avgNbDartCompleted;
 
-    public Double nbGame;
+    private Double nbGame;
 
-    public Double nbVictory;
+    private Double nbVictory;
 
     public DartStatPlayerDto(Long id, String typeGame, Double eloScore, Long idPlayer, Timestamp date,
             Double avgPosition, Double avgPoints, Double pctVictoire, Double avgNbDartCompleted, Double nbGame,
@@ -129,7 +129,4 @@ public class DartStatPlayerDto {
     public void setNbVictory(Double nbVictoire) {
         this.nbVictory = nbVictoire;
     }
-    
-    
-
 }

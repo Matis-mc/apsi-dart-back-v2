@@ -19,31 +19,31 @@ public class DartStatPlayerEntity {
     @Id @GeneratedValue 
     private Long id;  
 
-    public String typeJeu;
+    private String typeJeu;
 
-    public Double eloScore;
+    private Double eloScore;
 
-    public Long idPlayer;
+    private Long idPlayer;
 
-    public Timestamp date;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public AvgStat avgPosition;
+    private Timestamp date;
 
     @OneToOne(cascade = CascadeType.ALL)
-    public AvgStat avgPoints;
+    private AvgStat avgPosition;
 
     @OneToOne(cascade = CascadeType.ALL)
-    public PctStat pctVictoire;
+    private AvgStat avgPoints;
 
     @OneToOne(cascade = CascadeType.ALL)
-    public AvgStat avgNbDartCompleted;
+    private PctStat pctVictoire;
 
     @OneToOne(cascade = CascadeType.ALL)
-    public SumStat nbGame;
+    private AvgStat avgNbDartCompleted;
 
     @OneToOne(cascade = CascadeType.ALL)
-    public SumStat nbVictoire;
+    private SumStat nbGame;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private SumStat nbVictoire;
 
     public DartStatPlayerEntity(String typeJeu, Double eloScore, Long idPlayer,
             Timestamp date, AvgStat avgPosition, AvgStat avgPoints, PctStat pctVictoire, AvgStat avgNbDartCompleted,
@@ -165,8 +165,12 @@ public class DartStatPlayerEntity {
 
     @Override
     public String toString() {
-        return "DartStatPlayerEntity [id=" + id + ", typeJeu=" + typeJeu + ", eloScore=" + eloScore + ", idPlayer="
-                + idPlayer + ", date=" + date + "]";
+        return new StringBuilder("DartStatPlayerEntity [id=").append(id)
+        .append(", typeJeu=").append(typeJeu)
+        .append(", eloScore=").append(eloScore)
+        .append(", idPlayer=").append(idPlayer)
+        .append(", date=").append(date)
+        .append("]")
+        .toString();
     }
-    
 }
