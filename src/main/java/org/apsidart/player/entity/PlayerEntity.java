@@ -14,9 +14,9 @@ public class PlayerEntity {
     
     @Id @GeneratedValue private Long id;  
 
-    public String firstName;
-    public String lastName;
-    public String pseudo;
+    private String firstName;
+    private String lastName;
+    private String pseudo;
 
     public PlayerEntity(Long id, String firstName, String lastName, String pseudo) {
         this.id = id;
@@ -63,19 +63,11 @@ public class PlayerEntity {
 
     @Override
     public String toString() {
-        return "PlayerEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", pseudo=" + pseudo
-                + "]";
+        return new StringBuilder("PlayerEntity [id=").append(id)
+            .append(", firstName=").append(firstName)
+            .append(", lastName=").append(lastName)
+            .append(", pseudo=").append(pseudo)
+            .append("]")
+            .toString();
     }
-
-    
-    
-    
-    /* 
-    @OneToMany
-    private List<DPerform> dPerform;
-    */
-
-    
-
-
 }

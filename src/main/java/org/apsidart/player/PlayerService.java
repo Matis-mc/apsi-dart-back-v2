@@ -1,10 +1,11 @@
 package org.apsidart.player;
 
 import java.util.List;
+import java.util.Objects;
 
-import org.apsidart.common.mapper.PlayerMapper;
 import org.apsidart.player.dto.PlayerDto;
 import org.apsidart.player.entity.PlayerEntity;
+import org.apsidart.player.mapper.PlayerMapper;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -16,7 +17,7 @@ import jakarta.ws.rs.NotFoundException;
 public class PlayerService {
 
     @Inject
-    PlayerRepository pr;
+    private PlayerRepository pr;
 
     private static final Logger LOG = Logger.getLogger(PlayerService.class);
 
@@ -38,7 +39,7 @@ public class PlayerService {
 
     public PlayerDto getPlayerById(Long id){
         PlayerEntity pe = pr.findById(id);
-        if(pe == null){
+        if(Objects.isNull(pe)){
             throw new NotFoundException("Aucun joueur ne correspond à cette id " + id);
         }
         return PlayerMapper.entityToDto(pe);
@@ -47,7 +48,5 @@ public class PlayerService {
     @Transactional
     public boolean deletePlayerById(Long id){
         return pr.deleteById(id);
-    }
-
-    
+    }    
 }

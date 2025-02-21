@@ -10,11 +10,11 @@ import org.apsidart.player.dto.PlayerDto;
 
 public class DartStatGameDto {
 
-    List<PlayerDto> players;
+    private List<PlayerDto> players;
 
-    Map<Long, LinkedList<Integer>> evolutionScore;
+    private Map<Long, LinkedList<Integer>> evolutionScore;
 
-    Map<Long, LinkedList<Integer>> evolutionPosition;
+    private Map<Long, LinkedList<Integer>> evolutionPosition;
 
     public List<PlayerDto> getPlayers() {
         return players;
@@ -57,8 +57,5 @@ public class DartStatGameDto {
         this.players = new ArrayList<>();
         this.evolutionPosition = new HashMap<>();
         this.evolutionScore = new HashMap<>();
-    }    
-
-    
-    
+    }
 }

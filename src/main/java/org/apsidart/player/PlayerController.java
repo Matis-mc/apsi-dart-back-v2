@@ -3,7 +3,6 @@ package org.apsidart.player;
 import java.util.List;
 
 import org.apsidart.player.dto.PlayerDto;
-import org.jboss.logging.Logger;
 
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -22,10 +21,8 @@ import jakarta.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class PlayerController {
 
-    private static final Logger LOG = Logger.getLogger(PlayerController.class);
-
     @Inject
-    PlayerService service;
+    private PlayerService service;
     
     @POST
     public Long createPlayer(@Valid PlayerDto player){

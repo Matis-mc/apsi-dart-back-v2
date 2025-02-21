@@ -1,5 +1,7 @@
 package org.apsidart.dart.game.mapper;
 
+import static org.apsidart.common.Constants.General.DATE_FORMAT_DD_MM_YYYYY;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -9,16 +11,13 @@ import java.util.Map;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameDto;
 import org.apsidart.dart.game.dto.DartRoundResumeDto;
-import org.apsidart.dart.game.dto.PlayerPeformanceDto;
 import org.apsidart.dart.game.entity.DartGameEntity;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
-
-import static org.apsidart.common.Constants.General.DATE_FORMAT;
 
 
 public class DartGameMapper {
 
-    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_DD_MM_YYYYY);
 
     public static DartGameEntity dtoToEntity(DartGameCreationDto dto){
         return new DartGameEntity(dto.getTypeGame().name(), LocalDate.parse(dto.getCreationDate(), dateTimeFormatter));

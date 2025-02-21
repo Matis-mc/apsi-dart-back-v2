@@ -8,7 +8,6 @@ import org.apsidart.dart.game.dto.PlayerPeformanceDto;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 import org.apsidart.dart.performance.entity.DartPerformanceEntity;
 import org.apsidart.dart.performance.mapper.DartPerformanceMapper;
-import org.apsidart.player.PlayerService;
 import org.apsidart.player.dto.PlayerDto;
 import org.jboss.logging.Logger;
 
@@ -21,10 +20,7 @@ import jakarta.ws.rs.NotFoundException;
 public class DartPerformanceService {
 
     @Inject
-    DartPerformanceRepository repository;
-
-    @Inject
-    PlayerService playerService;
+    private DartPerformanceRepository repository;
 
     private static final Logger LOG = Logger.getLogger(DartPerformanceService.class);
 
@@ -97,7 +93,4 @@ public class DartPerformanceService {
             .map(entity -> DartPerformanceMapper.entityToDto(entity))
             .toList();
     }
-
-    
-    
 }

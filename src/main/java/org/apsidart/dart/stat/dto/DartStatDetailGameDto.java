@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class DartStatDetailGameDto {
 
-    List<DartStatPlayerDetailDto> players;
+    private List<DartStatPlayerDetailDto> players;
 
-    Map<Long, LinkedList<Integer>> evolutionScore;
+    private Map<Long, LinkedList<Integer>> evolutionScore;
 
-    Map<Long, LinkedList<Integer>> evolutionPosition;
+    private Map<Long, LinkedList<Integer>> evolutionPosition;
 
 
     public void addPlayer(DartStatPlayerDetailDto dartStatPlayerDetailDto){
@@ -39,7 +39,6 @@ public class DartStatDetailGameDto {
         this.evolutionScore.put(idPlayer, scores);
     }
 
-
     public void addPosition(Long idPlayer, LinkedList<Integer> position){
         this.evolutionPosition.put(idPlayer, position);
     }
@@ -56,8 +55,5 @@ public class DartStatDetailGameDto {
 
     public void setPlayers(List<DartStatPlayerDetailDto> players) {
         this.players = players;
-    }    
-
-    
-    
+    }
 }

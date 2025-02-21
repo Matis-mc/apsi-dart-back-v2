@@ -31,8 +31,7 @@ public class DartStatMapper {
             playerDto.name(),
             playerDto.pseudo(),
             statEntity.getEloScore().intValue(),
-            (int) statEntity.getNbVictoire().getValue(), 
-            (int) statEntity.getNbGame().getValue());
+            statEntity.getNbVictoire().getValueAsInt(), 
+            statEntity.getNbGame().getValueAsInt());
     }
-    
 }

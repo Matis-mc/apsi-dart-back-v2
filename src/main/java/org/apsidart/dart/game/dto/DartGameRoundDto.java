@@ -12,31 +12,36 @@ public class DartGameRoundDto {
         this.numberRound = numeroTour;
         this.performances = performances;
     }
+    
     public Long getIdGame() {
         return idGame;
     }
+
     public void setIdGame(Long idJeu) {
         this.idGame = idJeu;
     }
+
     public Integer getNumberRound() {
         return numberRound;
     }
+
     public void setNumberRound(Integer numeroTour) {
         this.numberRound = numeroTour;
     }
+
     public List<PlayerPeformanceDto> getPerformances() {
         return performances;
     }
+
     public void setPerformances(List<PlayerPeformanceDto> performances) {
         this.performances = performances;
     }
+
     @Override
     public String toString() {
-        return "DartGameTourDto [idJeu=" + idGame + ", numeroTour=" + numberRound + ", performances=" + performances
-                + "]";
+        return new StringBuilder("DartGameTourDto [idJeu=").append(idGame)
+            .append(", numeroTour=").append(numberRound)
+            .append(", performances=").append(performances)
+            .toString();
     }
-    
-    
-
-    
 }
