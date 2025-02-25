@@ -1,5 +1,13 @@
 package org.apsidart.dart.stat;
 
+import static org.apsidart.common.Constants.Stat.AVG_DART_COMPLETE;
+import static org.apsidart.common.Constants.Stat.AVG_POINT;
+import static org.apsidart.common.Constants.Stat.AVG_POSITION;
+import static org.apsidart.common.Constants.Stat.ELO_INITIAL;
+import static org.apsidart.common.Constants.Stat.NB_GAME;
+import static org.apsidart.common.Constants.Stat.NB_VICTOIRE;
+import static org.apsidart.common.Constants.Stat.PCT_VICTOIRE;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -17,23 +25,15 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
-import static org.apsidart.common.Constants.Stat.AVG_DART_COMPLETE;
-import static org.apsidart.common.Constants.Stat.AVG_POINT;
-import static org.apsidart.common.Constants.Stat.AVG_POSITION;
-import static org.apsidart.common.Constants.Stat.ELO_INITIAL;
-import static org.apsidart.common.Constants.Stat.NB_GAME;
-import static org.apsidart.common.Constants.Stat.NB_VICTOIRE;
-import static org.apsidart.common.Constants.Stat.PCT_VICTOIRE;
-
 
 @ApplicationScoped
 public class DartStatEnregistrementService {
 
     @Inject
-    DartStatRepository dartStatRepository;
+    private DartStatRepository dartStatRepository;
 
     @Inject
-    MultiEloService multiEloService;
+    private MultiEloService multiEloService;
 
     private static final Logger LOG = Logger.getLogger(DartRechercheStatService.class);
 

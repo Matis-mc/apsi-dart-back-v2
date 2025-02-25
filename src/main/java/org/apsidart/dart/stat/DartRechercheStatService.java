@@ -1,5 +1,7 @@
 package org.apsidart.dart.stat;
 
+import static org.apsidart.common.Constants.General.DATE_FORMAT_DD_MM_YYYYY;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -19,7 +21,6 @@ import org.apsidart.dart.stat.mapper.DartStatMapper;
 import org.apsidart.player.PlayerService;
 import org.apsidart.player.dto.PlayerDto;
 import org.jboss.logging.Logger;
-import static org.apsidart.common.Constants.General.DATE_FORMAT;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -29,13 +30,13 @@ import jakarta.ws.rs.NotFoundException;
 public class DartRechercheStatService {
 
     @Inject
-    DartStatRepository statRepository;
+    private DartStatRepository statRepository;
 
     @Inject
-    DartPerformanceService performanceService;
+    private DartPerformanceService performanceService;
 
     @Inject
-    PlayerService playerService;
+    private PlayerService playerService;
 
     private static final Logger LOG = Logger.getLogger(DartRechercheStatService.class);
 
@@ -110,7 +111,7 @@ public class DartRechercheStatService {
             .filter(Objects::nonNull)
             .sorted(Comparator.comparing(DartRankingPlayerElementDto::elo).reversed())
             .toList();
-        return new DartRankingPlayerDto(LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT)), classements);
+        return new DartRankingPlayerDto(LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT_DD_MM_YYYYY)), classements);
     }
 
     // pour les joueurs qui n'ont as fait de partie de fléchette, il n'y a pas de performance. On retourne null, et on filtrera dessus.

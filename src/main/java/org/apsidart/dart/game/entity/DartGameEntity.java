@@ -22,7 +22,6 @@ public class DartGameEntity {
 
     public DartGameEntity(String type, LocalDate date) {
         this.type = type;
-        this.statut = statut;
         this.date = date;
     }
 
@@ -60,7 +59,4 @@ public class DartGameEntity {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
-    
-    
 }
