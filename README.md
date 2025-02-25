@@ -64,3 +64,16 @@ If you want to learn more about building native executables, please consult <htt
 Easily start your REST Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+
+## Pour créer une application native
+
+```shell script
+
+./mvnw package -Dnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
+```
+
+
+```shell script
+docker build -f src/main/docker/Dockerfile.native-micro -t quarkus-quickstart/getting-started .
+```
+
