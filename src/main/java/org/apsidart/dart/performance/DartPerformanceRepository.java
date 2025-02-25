@@ -3,7 +3,6 @@ package org.apsidart.dart.performance;
 import java.util.List;
 import java.util.Optional;
 
-import org.apsidart.dart.game.DartGameService;
 import org.apsidart.dart.performance.entity.DartPerformanceEntity;
 import org.jboss.logging.Logger;
 
