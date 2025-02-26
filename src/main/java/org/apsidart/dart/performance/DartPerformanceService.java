@@ -1,7 +1,6 @@
 package org.apsidart.dart.performance;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apsidart.dart.game.dto.PlayerPeformanceDto;
@@ -16,6 +15,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
+import static org.apsidart.common.utils.CollectionUtils.replaceLastElement;
+
 
 @ApplicationScoped
 public class DartPerformanceService {
@@ -45,12 +46,9 @@ public class DartPerformanceService {
             entity.addVolley(dto.getVolley());
         } else {
             LOG.info("[DO] Modification du précédent tour pour le joueur " + dto.getPseudo());
-            entity.getHistPosition().removeLast();
-            entity.addPosition(dto.getPosition());
-            entity.getHistScore().removeLast();
-            entity.addScore(dto.getScore());
-            entity.getVolleys().removeLast();
-            entity.addVolley(dto.getVolley());
+            replaceLastElement(entity.getHistPosition(), dto.getPosition());
+            replaceLastElement(entity.getHistScore(), dto.getScore());
+            replaceLastElement(entity.getVolleys(), dto.getVolley());
         }
         repository.persistAndFlush(entity);
         LOG.info("[SUCCESS] Tour pris en compte pour le joueur " + dto.getPseudo());
@@ -76,10 +74,10 @@ public class DartPerformanceService {
         DartPerformanceEntity performanceEntity = new DartPerformanceEntity(
                                                         idPlayer,
                                                         idGame,
-                                                        new LinkedList<>(new ArrayList<Integer>(position)),
-                                                        new LinkedList<>(new ArrayList<Integer>(0)),
+                                                        new ArrayList<Integer>(position),
+                                                        new ArrayList<Integer>(0),
                                                         0,
-                                                        new LinkedList<>());
+                                                        new ArrayList<>());
         repository.persistAndFlush(performanceEntity);
 
     }
@@ -97,7 +95,6 @@ public class DartPerformanceService {
             .map(entity -> DartPerformanceMapper.entityToDto(entity))
             .toList();
     }
-
     
     
 }

@@ -4,6 +4,7 @@ import org.apsidart.dart.performance.dto.DartPerformanceDto;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import static org.apsidart.common.utils.CollectionUtils.getLastIndex;;
 
 @ApplicationScoped
 public class MultiEloService {
@@ -16,7 +17,7 @@ public class MultiEloService {
      */
     public double calculateNewEloRating(DartPerformanceDto performance, double scoreElo,  double[] allEloPlayers){
         double nbPlayer = allEloPlayers.length;
-        double actualScore = eloFunction.calculateScore(nbPlayer, performance.getHistoriquePosition().getLast());
+        double actualScore = eloFunction.calculateScore(nbPlayer, getLastIndex(performance.getHistoriquePosition()));
         double expectedScore = eloFunction.predicteScore(nbPlayer, scoreElo, allEloPlayers);
         return eloFunction.calculateNewElo(actualScore, expectedScore, nbPlayer, scoreElo);
     }

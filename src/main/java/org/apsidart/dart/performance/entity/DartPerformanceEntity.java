@@ -1,6 +1,6 @@
 package org.apsidart.dart.performance.entity;
 
-import java.util.LinkedList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,19 +22,19 @@ public class DartPerformanceEntity {
 
     private Long idGame;
 
-    private LinkedList<Integer> histPosition;    
+    private List<Integer> histPosition;    
 
-    private LinkedList<Integer> histScore;
+    private List<Integer> histScore;
 
     private Integer nombreTour;
 
-    private LinkedList<String> volleys;
+    private List<String> volleys;
 
     public DartPerformanceEntity() {
     }
 
-    public DartPerformanceEntity(Long idPlayer, Long idGame, LinkedList<Integer> historiquePosition,
-    LinkedList<Integer> histScore, Integer nombreTour, LinkedList<String> volees) {
+    public DartPerformanceEntity(Long idPlayer, Long idGame, List<Integer> historiquePosition,
+    List<Integer> histScore, Integer nombreTour, List<String> volees) {
         this.idPlayer = idPlayer;
         this.idGame = idGame;
         this.histPosition = historiquePosition;
@@ -67,11 +67,11 @@ public class DartPerformanceEntity {
         this.idGame = idGame;
     }
 
-    public LinkedList<Integer> getHistPosition() {
+    public List<Integer> getHistPosition() {
         return histPosition;
     }
 
-    public void setHistPosition(LinkedList<Integer> historiquePosition) {
+    public void setHistPosition(List<Integer> historiquePosition) {
         this.histPosition = historiquePosition;
     }
 
@@ -79,11 +79,11 @@ public class DartPerformanceEntity {
         this.histPosition.add(position);
     }
 
-    public LinkedList<Integer> getHistScore() {
+    public List<Integer> getHistScore() {
         return histScore;
     }
 
-    public void setHistScore(LinkedList<Integer> score) {
+    public void setHistScore(List<Integer> score) {
         this.histScore = score;
     }
 
@@ -99,11 +99,11 @@ public class DartPerformanceEntity {
         this.nombreTour = nombreTour;
     }
 
-    public LinkedList<String> getVolleys() {
+    public List<String> getVolleys() {
         return volleys;
     }
 
-    public void setVolleys(LinkedList<String> volleys) {
+    public void setVolleys(List<String> volleys) {
         this.volleys = volleys;
     }
 

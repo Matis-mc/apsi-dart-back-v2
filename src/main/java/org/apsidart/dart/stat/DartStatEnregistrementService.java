@@ -24,6 +24,8 @@ import static org.apsidart.common.Constants.Stat.ELO_INITIAL;
 import static org.apsidart.common.Constants.Stat.NB_GAME;
 import static org.apsidart.common.Constants.Stat.NB_VICTOIRE;
 import static org.apsidart.common.Constants.Stat.PCT_VICTOIRE;
+import static org.apsidart.common.utils.CollectionUtils.getLastIndex;;
+
 
 
 @ApplicationScoped
@@ -72,15 +74,15 @@ public class DartStatEnregistrementService {
 
     private DartStatPlayerEntity updateDartStatPlayerEntity(DartStatPlayerEntity entity, DartPerformanceDto performanceDto){
     
-        boolean isVictoire = isVictoire(performanceDto.getHistoriquePosition().getLast());
+        boolean isVictoire = isVictoire(getLastIndex(performanceDto.getHistoriquePosition()));
         
         DartStatPlayerEntity newStatEntity = new DartStatPlayerEntity(
                 entity.getTypeJeu(), 
                 entity.getEloScore(),
                 entity.getIdPlayer(), 
                 new Timestamp(new Date().getTime()),
-                getNewAvgStatFromOld(entity.getAvgPosition(), performanceDto.getHistoriquePosition().getLast()),
-                getNewAvgStatFromOld(entity.getAvgPoints(), performanceDto.getScore().getLast()),
+                getNewAvgStatFromOld(entity.getAvgPosition(), getLastIndex(performanceDto.getHistoriquePosition())),
+                getNewAvgStatFromOld(entity.getAvgPoints(), getLastIndex(performanceDto.getScore())),
                 getNewPctStatFromOld(entity.getPctVictoire(), isVictoire ? 1d : 0d),
                 getNewAvgStatFromOld(entity.getAvgNbDartCompleted(), getNbDartCompleted(performanceDto.getVolees())),
                 getNewSumStatFromOld(entity.getNbGame(), 1d),
@@ -89,15 +91,15 @@ public class DartStatEnregistrementService {
     }
 
     private DartStatPlayerEntity initNewDartStatPlayer(DartPerformanceDto performanceDto, String typeJeu){
-        boolean isVictoire = isVictoire(performanceDto.getHistoriquePosition().getLast());
+        boolean isVictoire = isVictoire(getLastIndex(performanceDto.getHistoriquePosition()));
 
         return new DartStatPlayerEntity(
                 typeJeu, 
                 ELO_INITIAL,
                 performanceDto.getIdPlayer(), 
                 new Timestamp(new Date().getTime()),
-                new AvgStat(performanceDto.getHistoriquePosition().getLast(), AVG_POSITION),
-                new AvgStat(performanceDto.getScore().getLast(), AVG_POINT),
+                new AvgStat(getLastIndex(performanceDto.getHistoriquePosition()), AVG_POSITION),
+                new AvgStat(getLastIndex(performanceDto.getScore()), AVG_POINT),
                 new PctStat(isVictoire ? 1d : 0d, PCT_VICTOIRE),
                 new AvgStat(getNbDartCompleted(performanceDto.getVolees()), AVG_DART_COMPLETE),
                 new SumStat(1d, NB_GAME ),
