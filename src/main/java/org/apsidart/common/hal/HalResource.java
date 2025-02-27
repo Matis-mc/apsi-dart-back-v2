@@ -19,8 +19,9 @@ public class HalResource<T> {
     @JsonProperty("_embedded")
     private List<HalResource<T>> embedded = new ArrayList<>();
 
-    public void addLink(String rel, String href) {
+    public HalResource<T> addLink(String rel, String href) {
         links.computeIfAbsent(rel, k -> new HalLink(href) );
+        return this;
     }
 
     public void addEmbedded(HalResource<T> resource) {
@@ -29,7 +30,9 @@ public class HalResource<T> {
 
     // Getters et setters
     public T getContent() { return content; }
-    public void setContent(T content) { this.content = content; }
+    public HalResource<T> setContent(T content) { 
+        this.content = content;
+        return this; }
     public Map<String, HalLink> getLinks() { return links; }
     public List<HalResource<T>> getEmbedded() { return embedded; }
 }

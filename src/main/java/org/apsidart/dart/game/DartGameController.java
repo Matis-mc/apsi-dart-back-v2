@@ -43,19 +43,31 @@ public class DartGameController {
 
     @POST
     @Produces({ MediaType.APPLICATION_JSON, RestMediaType.APPLICATION_HAL_JSON })
-    public DartGameCreationRetourDto createGame(@Valid DartGameCreationDto dto){
-        return service.createGame(dto);
+    public HalResource<DartGameCreationRetourDto> createGame(@Valid DartGameCreationDto dto){
+
+        DartGameCreationRetourDto retour = service.createGame(dto);
+        return new HalResource<DartGameCreationRetourDto>()
+            .setContent(retour)
+            .addLink("round",  uriInfo.getAbsolutePath() + "/round")
+            .addLink("self", uriInfo.getAbsolutePath() + "/" + retour.id())
+            .addLink("delete", uriInfo.getAbsolutePath() + "/" + retour.id());
     }
 
     @GET
-    public List<DartGameDto> getAllGame(){
-        return service.getAllGame();
+    public HalResource<DartGameDto> getAllGame(){
+        HalResource<DartGameDto> halResource = new HalResource<>();
+        service.getAllGame()
+            .stream()
+            .map(g -> getHalResourceFromDartGame(g))
+            .forEach(r -> halResource.addEmbedded(r));
+            return halResource;
     }
 
     @GET
     @Path("/{id}")
-    public DartGameDto getGameById(@PathParam("id") Long id){
-        return service.getGameById(id);
+    public HalResource<DartGameDto> getGameById(@PathParam("id") Long id){
+        DartGameDto dto = service.getGameById(id);
+        return getHalResourceFromDartGame(dto);
     }    
 
     @POST
@@ -77,43 +89,23 @@ public class DartGameController {
     }    
 
 
-    private <T> HalResource<T> getHalResourceFromContent(T content, @Nullable Long idContent){
-        HalResource<T> halResource = new HalResource<T>();
-        halResource.setContent(content);
-        halResource.addLink("create", uriInfo.getAbsolutePath().toString());
-        halResource.addLink("collection", uriInfo.getAbsolutePath().toString());
-        if(idContent != null ){
-            halResource.addLink("self", uriInfo.getAbsolutePath() + "/" + idContent);
-            halResource.addLink("delete", uriInfo.getAbsolutePath() + "/" + idContent);
-        }
-        return halResource;
-    }
-
-    public Map<String, HalLink> getPublicHalLinks(){
-        Map<String, HalLink> links = new HashMap<>();
-        links.put("create", new HalLink(uriInfo.getAbsolutePath().toString()));
-        links.put("collection", new HalLink(uriInfo.getAbsolutePath().toString()));
-        return links;
-    }
-
-    public HalLink getLinkStartDartGame(){
-        return new HalLink(uriInfo.getAbsolutePath().toString());
-    }
-
-    public HalLink getLinkSelfGame(Long id){
-        return new HalLink(uriInfo.getAbsolutePath().toString() + "/" + id);
-    }
-
-    public HalLink getLinkAllDartGame(){
-        return new HalLink(uriInfo.getAbsolutePath().toString());
-    }
-    
-    private HalLink getLinkRoundDartGame(){
-        return new HalLink(uriInfo.getAbsolutePath().toString() + "/round");
-    }
-
-    private HalLink getLinkEndDartGame(){
-        return new HalLink(uriInfo.getAbsolutePath().toString() + "/end");
+    private <T> HalResource<DartGameDto> getHalResourceFromDartGame(@Nullable DartGameDto dto){
+        HalResource<DartGameDto> halResource = new HalResource<DartGameDto>()
+            .setContent(dto)
+            .addLink("self", uriInfo.getAbsolutePath() + "/" + dto.getId())
+            .addLink("all", uriInfo.getAbsolutePath() + "/");
+        return switch(dto.getStatut()){
+            case "CREATION" -> halResource
+                            .addLink("round",  uriInfo.getAbsolutePath() + "/round")
+                            .addLink("delete", uriInfo.getAbsolutePath() + "/" + dto.getId());
+            case "IN_PROGRESS" -> halResource
+                            .addLink("round",  uriInfo.getAbsolutePath() + "/round")
+                            .addLink("end",  uriInfo.getAbsolutePath() + "/end")
+                            .addLink("delete", uriInfo.getAbsolutePath() + "/" + dto.getId());
+            case "COMPLETED" -> halResource;
+            case "DELETED" -> halResource;
+            default -> halResource;
+        };
     }
     
 }

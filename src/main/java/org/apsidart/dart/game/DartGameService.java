@@ -119,7 +119,8 @@ public class DartGameService {
     }
 
     private void checkStatutGame(DartGameEntity gameEntity, List<StatutGameEnum> validStatut){
-        if(validStatut.stream().noneMatch(statut -> statut.equals(gameEntity.getStatut()))){
+        LOG.info(validStatut.toString() + gameEntity.getStatut());
+        if(validStatut.stream().noneMatch(statut -> statut.libelle.equals(gameEntity.getStatut()))){
             throw new InvalidStatutGame(gameEntity.getId(), gameEntity.getStatut());
         }
     }
