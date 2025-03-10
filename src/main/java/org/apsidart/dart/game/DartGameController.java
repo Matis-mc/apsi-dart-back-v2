@@ -2,9 +2,7 @@ package org.apsidart.dart.game;
 
 import java.util.List;
 
-import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
-import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
 import org.apsidart.dart.game.dto.DartGameResumeDto;
 import org.apsidart.dart.game.dto.DartGameRoundDto;
@@ -32,7 +30,7 @@ public class DartGameController {
     private DartGameService service;
 
     @POST
-    public DartGameCreationRetourDto createGame(@Valid DartGameCreationDto dto){
+    public Long createGame(@Valid DartGameCreationDto dto){
         return service.createGame(dto);
     }
 
@@ -55,14 +53,13 @@ public class DartGameController {
 
     @POST
     @Path("/round")
-    public CommentDto performOnGame(@Valid DartGameRoundDto dto){
-        return service.performOnGame(dto);
+    public void performOnGame(@Valid DartGameRoundDto dto){
+        service.performOnGame(dto);
     }
 
     @POST
     @Path("/end")
-    public CommentDto endGame(@Valid DartGameRoundDto dto){
-        return service.endGame(dto);
+    public void endGame(@Valid DartGameRoundDto dto){
+        service.endGame(dto);
     }
-    
 }
