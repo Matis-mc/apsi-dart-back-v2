@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apsidart.common.exception.InvalidStatutGameException;
-import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
-import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
 import org.apsidart.dart.game.dto.DartGameDto;
 import org.apsidart.dart.game.dto.DartGameResumeDto;
 import org.apsidart.dart.game.dto.DartGameRoundDto;
@@ -20,7 +18,6 @@ import org.apsidart.dart.game.mapper.DartGameMapper;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 import org.apsidart.dart.stat.DartStatEnregistrementService;
-import org.apsidart.ia.IAService;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -40,15 +37,12 @@ public class DartGameService {
     private DartPerformanceService performanceService;
 
     @Inject
-    private IAService iaService;
-
-    @Inject
     private DartStatEnregistrementService dartStatEnregistrementService;
 
     private static final Logger LOG = Logger.getLogger(DartGameService.class);
 
     @Transactional
-    public DartGameCreationRetourDto createGame(DartGameCreationDto dto){
+    public Long createGame(DartGameCreationDto dto){
 
         LOG.info("[START] Creation d'une partie");
         DartGameEntity gameEntity = DartGameMapper.dtoToEntity(dto);
@@ -58,8 +52,7 @@ public class DartGameService {
         LOG.info("[START] Initialisation des performances de chaques joueurs de la partie " + gameEntity.getId());
         performanceService.createPerformanceForGame(gameEntity.getId(), dto.getPlayers());
         LOG.info("[SUCCESS] Initialisation des performances de chaques joueurs");
-        String commentaire = iaService.getDartStartGameCommentaire(dto.getPlayers());
-        return new DartGameCreationRetourDto(gameEntity.getId(), commentaire);
+        return gameEntity.getId();
 
     }
 
@@ -92,18 +85,17 @@ public class DartGameService {
     }
 
     @Transactional
-    public CommentDto performOnGame(DartGameRoundDto dto){
+    public void performOnGame(DartGameRoundDto dto){
         LOG.info("[START] Enregistrement d'un tour avec payload : " + dto.toString());
         DartGameEntity game = checkStatuGame(dto.getIdGame(), List.of(IN_PROGRESS.libelle, CREATION.libelle));
         game.setStatut(IN_PROGRESS.libelle);
         repository.persist(game);
         dto.getPerformances().forEach(p -> performanceService.enregistrePerformanceForPlayer(p, dto.getIdGame()));
         LOG.info("[SUCCESS] Enregistrement d'un tour");
-        return iaService.getDartRoundCommentaire(dto.getPerformances());
     }
 
     @Transactional
-    public CommentDto endGame(DartGameRoundDto dto){
+    public void endGame(DartGameRoundDto dto){
         LOG.info("[START] Enregistrement du dernier tour avec payload : " + dto.toString());
         DartGameEntity gameEntity = checkStatuGame(dto.getIdGame(), IN_PROGRESS.libelle);
         dto.getPerformances().forEach(p -> performanceService.endGameForPlayer(p, dto.getIdGame()));
@@ -113,8 +105,6 @@ public class DartGameService {
 
         List<DartPerformanceDto> performanceDtos = performanceService.getPerformanceByIdGame(dto.getIdGame());
         dartStatEnregistrementService.majPlayersStat(performanceDtos, gameEntity.getType());       
-
-        return iaService.getDartEndGameCommentaire(dto.getPerformances());
     }
 
     /*
