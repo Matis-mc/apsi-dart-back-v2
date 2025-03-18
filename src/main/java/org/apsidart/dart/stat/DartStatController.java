@@ -29,7 +29,7 @@ import jakarta.ws.rs.core.MediaType;
 public class DartStatController {
 
     @Inject
-    DartRechercheStatService service;
+    private DartRechercheStatService service;
 
     @GET
     @Path("/player/ranking")

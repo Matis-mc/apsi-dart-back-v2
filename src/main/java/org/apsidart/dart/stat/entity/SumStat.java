@@ -16,6 +16,7 @@ public class SumStat {
     private Long id;
     private double value;
     private String label;
+
     public Long getId() {
         return id;
     }
@@ -23,22 +24,28 @@ public class SumStat {
     public double getValue() {
         return value;
     }
+
+    public int getValueAsInt() {
+        return Double.valueOf(this.value).intValue();
+    }
+
     public void setValue(double value) {
         this.value = value;
     }
+
     public String getLabel() {
         return label;
     }
+
     public void setLabel(String label) {
         this.label = label;
     }
+
     public SumStat(double value, String label) {
         this.value = value;
         this.label = label;
     }
 
     public SumStat() {
-    }
-
-    
+    }    
 }

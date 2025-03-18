@@ -18,21 +18,31 @@ public class AvgStat {
     public Long getId() {
         return id;
     }
+
     public double getPoid() {
         return poid;
     }
+
     public void setPoid(double poid) {
         this.poid = poid;
     }
+
     public double getValue() {
         return value;
     }
+
+    public int getValueAsInt() {
+        return Double.valueOf(this.value).intValue();
+    }
+
     public void setValue(double value) {
         this.value = value;
     }
+
     public String getLabel() {
         return label;
     }
+
     public void setLabel(String label) {
         this.label = label;
     }
@@ -47,7 +57,7 @@ public class AvgStat {
         this.value = value;
         this.label = label;
     }
+
     public AvgStat() {
     }
-    
 }

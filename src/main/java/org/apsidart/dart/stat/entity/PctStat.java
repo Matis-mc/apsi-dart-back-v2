@@ -49,8 +49,4 @@ public class PctStat {
     public void setLabel(String label) {
         this.label = label;
     }
-
-    
-    
-    
 }

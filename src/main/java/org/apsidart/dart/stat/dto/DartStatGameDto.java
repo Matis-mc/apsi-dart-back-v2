@@ -13,11 +13,11 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection(targets = {java.util.LinkedList.class})
 public class DartStatGameDto {
 
-    List<PlayerDto> players;
+    private List<PlayerDto> players;
 
-    Map<Long, LinkedList<Integer>> evolutionScore;
+    private Map<Long, LinkedList<Integer>> evolutionScore;
 
-    Map<Long, LinkedList<Integer>> evolutionPosition;
+    private Map<Long, LinkedList<Integer>> evolutionPosition;
 
     public List<PlayerDto> getPlayers() {
         return players;
@@ -60,8 +60,5 @@ public class DartStatGameDto {
         this.players = new ArrayList<>();
         this.evolutionPosition = new HashMap<>();
         this.evolutionScore = new HashMap<>();
-    }    
-
-    
-    
+    }
 }
