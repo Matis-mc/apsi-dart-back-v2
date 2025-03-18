@@ -4,6 +4,7 @@ import static org.apsidart.dart.game.enumeration.StatutGameEnum.CREATION;
 import static org.apsidart.dart.game.enumeration.StatutGameEnum.IN_PROGRESS;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apsidart.common.exception.InvalidStatutGameException;
@@ -70,6 +71,7 @@ public class DartGameService {
         return repository.findAll()
             .stream()
             .map(entity -> DartGameMapper.entityTodto(entity))
+            .sorted(Comparator.comparing(DartGameDto::getDate))
             .toList();
         
     }
