@@ -8,6 +8,9 @@ import java.util.Map;
 
 import org.apsidart.player.dto.PlayerDto;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection(targets = {java.util.LinkedList.class})
 public class DartStatGameDto {
 
     private List<PlayerDto> players;

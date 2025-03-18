@@ -13,9 +13,7 @@ import static org.apsidart.common.Constants.Prompt.DART_COMMENTAIRE_START_GAME_C
 @RegisterAiService
 public interface CommentateurService {
 
-    // Scope / context passed to the LLM
   @SystemMessage(DART_COMMENTATEUR_INIT)
-  // Prompt (with detailed instructions and variable section) passed to the LLM
   @UserMessage(DART_COMMENTAIRE_ROUND_CONTEXT)
   String commentVolee(String volleysDescription);
 
