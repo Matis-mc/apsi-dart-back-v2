@@ -27,7 +27,6 @@ import org.apsidart.dart.stat.DartStatEnregistrementService;
 import org.apsidart.ia.IAService;
 import org.apsidart.player.PlayerService;
 import org.apsidart.player.dto.PlayerDto;
-import org.apsidart.player.entity.PlayerEntity;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -81,7 +80,8 @@ public class DartGameService {
             .stream()
             .map(entity -> DartGameMapper.entityTodto(entity))
             .sorted(Comparator.comparing(DartGameDto::getDate))
-            .toList();   
+            .toList();
+        
     }
 
     /*
@@ -164,7 +164,6 @@ public class DartGameService {
         List<DartPlayerDto> players = performanceService.getPerformanceByIdGame(entity.getId())
             .stream()
             .map(p -> {
-                    LOG.info("[DO] Récupération du joueur " + p.getIdPlayer());
                     try {
                         PlayerDto pe = playerService.getPlayerById(p.getIdPlayer());
                         return new DartPlayerDto(p.getIdPlayer(),
