@@ -4,8 +4,6 @@ public record DartPlayerDto (
     Long id,
     String firstName,
     String name,
-    String pseudo,
-    Double elo
-){
+    String pseudo){
     
 }

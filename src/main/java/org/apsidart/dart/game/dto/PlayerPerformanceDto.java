@@ -1,9 +1,10 @@
 package org.apsidart.dart.game.dto;
 
+import io.smallrye.common.constraint.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class PlayerPeformanceDto {
+public class PlayerPerformanceDto {
     @NotNull
     private Long idPlayer;
     
@@ -16,7 +17,7 @@ public class PlayerPeformanceDto {
     @NotNull
     private Integer position;
     
-    @NotBlank
+    @Nullable
     private String volley;
     
     @NotNull

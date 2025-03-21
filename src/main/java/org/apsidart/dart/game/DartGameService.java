@@ -6,6 +6,7 @@ import static org.apsidart.dart.game.enumeration.StatutGameEnum.IN_PROGRESS;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import org.apsidart.common.exception.InvalidStatutGameException;
@@ -163,11 +164,13 @@ public class DartGameService {
         LOG.info("[DO] Récupération de la partie " + entity.getId());
         List<DartPlayerDto> players = performanceService.getPerformanceByIdGame(entity.getId())
             .stream()
+            .sorted((p1, p2) -> getLastElement(p1.getHistoriquePosition())
+                            .compareTo(getLastElement(p2.getHistoriquePosition())))
             .map(p -> {
                     try {
                         PlayerDto pe = playerService.getPlayerById(p.getIdPlayer());
                         return new DartPlayerDto(p.getIdPlayer(),
-                            pe.firstName(), pe.name(), pe.pseudo(), p.getElo());
+                            pe.firstName(), pe.name(), pe.pseudo());
                     } catch ( NotFoundException e){
                         LOG.error("[FAILED] Récupération du joueur " + p.getIdPlayer());
                         return null;
@@ -189,6 +192,13 @@ public class DartGameService {
             return game;
         }
         throw new InvalidStatutGameException(game.getStatut());
+    }
+
+    public static <T> T getLastElement(List<T> list){
+        if(Objects.isNull(list) || list.isEmpty()){
+            throw new NoSuchElementException();
+        }
+        return list.get(list.size() - 1);
     }
     
 }
