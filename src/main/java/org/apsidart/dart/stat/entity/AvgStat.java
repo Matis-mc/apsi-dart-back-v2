@@ -11,8 +11,11 @@ public class AvgStat {
 
     @Id @GeneratedValue 
     private Long id;
+
     private double poid;
+
     private double value;
+    
     private String label;
 
     public Long getId() {

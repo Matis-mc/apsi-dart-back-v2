@@ -16,7 +16,6 @@ import org.apsidart.dart.stat.dto.DartStatDetailGameDto;
 import org.apsidart.dart.stat.dto.DartStatGameDto;
 import org.apsidart.dart.stat.dto.DartStatPlayerDetailDto;
 import org.apsidart.dart.stat.dto.DartStatPlayerDto;
-import org.apsidart.dart.stat.entity.DartStatPlayerEntity;
 import org.apsidart.dart.stat.mapper.DartStatMapper;
 import org.apsidart.player.PlayerService;
 import org.apsidart.player.dto.PlayerDto;
@@ -54,24 +53,10 @@ public class DartRechercheStatService {
     }
     
     public DartStatPlayerDetailDto getHistoriqueStatsPlayer(Long idPlayer, String typeJeu){
-        LOG.info("[START] Récupération des statistiques détaillées pour le joueur " + idPlayer + " et le jeu " + typeJeu);
-        List<DartStatPlayerEntity> stats = statRepository.findAllStatByIdPlayerAndTypeJeu(idPlayer, typeJeu);
-        
-        DartStatPlayerDetailDto dto = new DartStatPlayerDetailDto(typeJeu, idPlayer, stats.getFirst().getNbGame().getValue(), stats.getFirst().getNbVictoire().getValue());
-
-        if(Objects.isNull(stats) || stats.isEmpty()){
-            LOG.info("[FAILED] Aucune statistique n'est associé au player : " + idPlayer + " pour le jeu " + typeJeu);
-            throw new NotFoundException("Aucune statistique n'est associé au player : " + idPlayer);
-        }
-        stats.forEach( s -> {
-            dto.addEloScore(s.getEloScore().intValue());
-            dto.addAvgPosition(s.getAvgPosition().getValue());
-            dto.addAvgPoint(s.getAvgPoints().getValue());
-            dto.addPctVictoire(s.getPctVictoire().getValue());
-            dto.addAvgNbDartCompleted(s.getAvgNbDartCompleted().getValue());
-        });   
-        LOG.info("[SUCCESS] Récupération des statistiques détaillées : " + dto.toString());
-        return dto;
+        LOG.info("[DO] Récupération des statistiques détaillées pour le joueur " + idPlayer + " et le jeu " + typeJeu);
+        return statRepository.findLastStatByIdPlayerAndTypeJeu(idPlayer, typeJeu)
+            .map(DartStatMapper::mapEntityToDtoDetail)
+            .orElseThrow(() -> new NotFoundException("Aucune statistique n'est associé au player : " + idPlayer));
     }
 
     /**

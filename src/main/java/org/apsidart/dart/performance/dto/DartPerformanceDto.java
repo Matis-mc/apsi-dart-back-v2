@@ -98,4 +98,12 @@ public class DartPerformanceDto {
     public void setElo(Double elo) {
         this.elo = elo;
     }
+
+    @Override
+    public String toString() {
+        return "DartPerformanceDto [idPlayer=" + idPlayer + ", idGame=" + idGame + ", elo=" + elo
+                + ", historiquePosition=" + historiquePosition + ", score=" + score + ", nombreTour=" + nombreTour
+                + ", volees=" + volees + "]";
+    }
+    
 }

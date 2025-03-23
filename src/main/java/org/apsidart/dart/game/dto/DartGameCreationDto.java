@@ -2,7 +2,7 @@ package org.apsidart.dart.game.dto;
 
 import java.util.List;
 
-import org.apsidart.dart.game.enumeration.CodeTypGameEnum;
+import org.apsidart.common.enumeration.CodeTypGameEnum;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

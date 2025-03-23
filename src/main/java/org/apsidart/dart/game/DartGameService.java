@@ -1,14 +1,15 @@
 package org.apsidart.dart.game;
 
-import static org.apsidart.dart.game.enumeration.StatutGameEnum.CREATION;
-import static org.apsidart.dart.game.enumeration.StatutGameEnum.IN_PROGRESS;
+import static org.apsidart.common.enumeration.StatutGameEnum.CREATION;
+import static org.apsidart.common.enumeration.StatutGameEnum.IN_PROGRESS;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import org.apsidart.common.ListUtils;
+import org.apsidart.common.enumeration.StatutGameEnum;
 import org.apsidart.common.exception.InvalidStatutGameException;
 import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
@@ -20,7 +21,6 @@ import org.apsidart.dart.game.dto.DartGameRoundDto;
 import org.apsidart.dart.game.dto.DartPlayerDto;
 import org.apsidart.dart.game.dto.DartRoundResumeDto;
 import org.apsidart.dart.game.entity.DartGameEntity;
-import org.apsidart.dart.game.enumeration.StatutGameEnum;
 import org.apsidart.dart.game.mapper.DartGameMapper;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
@@ -164,8 +164,8 @@ public class DartGameService {
         LOG.info("[DO] Récupération de la partie " + entity.getId());
         List<DartPlayerDto> players = performanceService.getPerformanceByIdGame(entity.getId())
             .stream()
-            .sorted((p1, p2) -> getLastElement(p1.getHistoriquePosition())
-                            .compareTo(getLastElement(p2.getHistoriquePosition())))
+            .sorted((p1, p2) -> ListUtils.getLastElement(p1.getHistoriquePosition())
+                            .compareTo(ListUtils.getLastElement(p2.getHistoriquePosition())))
             .map(p -> {
                     try {
                         PlayerDto pe = playerService.getPlayerById(p.getIdPlayer());
@@ -192,13 +192,6 @@ public class DartGameService {
             return game;
         }
         throw new InvalidStatutGameException(game.getStatut());
-    }
-
-    public static <T> T getLastElement(List<T> list){
-        if(Objects.isNull(list) || list.isEmpty()){
-            throw new NoSuchElementException();
-        }
-        return list.get(list.size() - 1);
     }
     
 }
