@@ -1,6 +1,6 @@
 package org.apsidart.dart.performance.dto;
 
-import java.util.LinkedList;
+import java.util.List;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -16,21 +16,21 @@ public class DartPerformanceDto {
     @Nullable
     private Double elo;
 
-    private LinkedList<Integer> historiquePosition;    
+    private List<Integer> historiquePosition;    
 
     @NotNull
-    private LinkedList<Integer> score;
+    private List<Integer> score;
 
     @NotNull
     private Integer nombreTour;
 
-    private LinkedList<String> volees;
+    private List<String> volees;
 
     public DartPerformanceDto() {
     }
 
-    public DartPerformanceDto(Long idPlayer, Long idGame, LinkedList<Integer> historiquePosition, LinkedList<Integer> score,
-            Integer nombreTour, LinkedList<String> volees) {
+    public DartPerformanceDto(Long idPlayer, Long idGame, List<Integer> historiquePosition, List<Integer> score,
+            Integer nombreTour, List<String> volees) {
         this.idPlayer = idPlayer;
         this.idGame = idGame;
         this.historiquePosition = historiquePosition;
@@ -55,19 +55,23 @@ public class DartPerformanceDto {
         this.idGame = idGame;
     }
 
-    public LinkedList<Integer> getHistoriquePosition() {
+    public List<Integer> getHistoriquePosition() {
         return historiquePosition;
     }
 
-    public void setHistoriquePosition(LinkedList<Integer> historiquePosition) {
+    public Integer getLastPosition(){
+        return historiquePosition.get(historiquePosition.size());
+    }
+
+    public void setHistoriquePosition(List<Integer> historiquePosition) {
         this.historiquePosition = historiquePosition;
     }
 
-    public LinkedList<Integer> getScore() {
+    public List<Integer> getScore() {
         return score;
     }
 
-    public void setScore(LinkedList<Integer> score) {
+    public void setScore(List<Integer> score) {
         this.score = score;
     }
 
@@ -79,11 +83,11 @@ public class DartPerformanceDto {
         this.nombreTour = nombreTour;
     }
 
-    public LinkedList<String> getVolees() {
+    public List<String> getVolees() {
         return volees;
     }
 
-    public void setVolees(LinkedList<String> volees) {
+    public void setVolees(List<String> volees) {
         this.volees = volees;
     }
 
@@ -94,4 +98,12 @@ public class DartPerformanceDto {
     public void setElo(Double elo) {
         this.elo = elo;
     }
+
+    @Override
+    public String toString() {
+        return "DartPerformanceDto [idPlayer=" + idPlayer + ", idGame=" + idGame + ", elo=" + elo
+                + ", historiquePosition=" + historiquePosition + ", score=" + score + ", nombreTour=" + nombreTour
+                + ", volees=" + volees + "]";
+    }
+    
 }

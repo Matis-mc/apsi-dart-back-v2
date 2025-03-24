@@ -5,6 +5,7 @@ import java.util.List;
 import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
 import org.apsidart.dart.game.dto.DartGameCreationRetourDto;
+import org.apsidart.dart.game.dto.DartGameDetailDto;
 import org.apsidart.dart.game.dto.DartGameDto;
 import org.apsidart.dart.game.dto.DartGameResumeDto;
 import org.apsidart.dart.game.dto.DartGameRoundDto;
@@ -39,6 +40,12 @@ public class DartGameController {
     @GET
     public List<DartGameDto> getAllGame(){
         return service.getAllGame();
+    }
+
+    @GET
+    @Path("detail")
+    public List<DartGameDetailDto> getAllGamesDetails(){
+        return service.getAllGamesDetail();
     }
 
     @GET

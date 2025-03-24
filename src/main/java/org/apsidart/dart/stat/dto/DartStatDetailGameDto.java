@@ -2,7 +2,6 @@ package org.apsidart.dart.stat.dto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,36 +9,36 @@ public class DartStatDetailGameDto {
 
     private List<DartStatPlayerDetailDto> players;
 
-    private Map<Long, LinkedList<Integer>> evolutionScore;
+    private Map<Long, List<Integer>> evolutionScore;
 
-    private Map<Long, LinkedList<Integer>> evolutionPosition;
+    private Map<Long, List<Integer>> evolutionPosition;
 
 
     public void addPlayer(DartStatPlayerDetailDto dartStatPlayerDetailDto){
         players.add(dartStatPlayerDetailDto);
     }
 
-    public Map<Long, LinkedList<Integer>> getEvolutionScore() {
+    public Map<Long, List<Integer>> getEvolutionScore() {
         return evolutionScore;
     }
 
-    public void setEvolutionScore(Map<Long, LinkedList<Integer>> evolutionScore) {
+    public void setEvolutionScore(Map<Long, List<Integer>> evolutionScore) {
         this.evolutionScore = evolutionScore;
     }
 
-    public Map<Long, LinkedList<Integer>> getEvolutionPosition() {
+    public Map<Long, List<Integer>> getEvolutionPosition() {
         return evolutionPosition;
     }
 
-    public void setEvolutionPosition(Map<Long, LinkedList<Integer>> evolutionPosition) {
+    public void setEvolutionPosition(Map<Long, List<Integer>> evolutionPosition) {
         this.evolutionPosition = evolutionPosition;
     }
 
-    public void addScore(Long idPlayer, LinkedList<Integer> scores){
+    public void addScore(Long idPlayer, List<Integer> scores){
         this.evolutionScore.put(idPlayer, scores);
     }
 
-    public void addPosition(Long idPlayer, LinkedList<Integer> position){
+    public void addPosition(Long idPlayer, List<Integer> position){
         this.evolutionPosition.put(idPlayer, position);
     }
 

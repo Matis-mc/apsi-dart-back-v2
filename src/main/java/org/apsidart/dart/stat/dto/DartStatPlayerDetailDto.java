@@ -15,24 +15,18 @@ public class DartStatPlayerDetailDto {
 
     private List<Double> avgPoints;
 
-    private List<Double> pctVictory;
-
-    private List<Double> avgNbDartCompleted;
-
     private Double nbGame;
 
     private Double nbVictory;
 
     public DartStatPlayerDetailDto(String typeJeu, List<Integer> eloScore, Long idPlayer,
-            List<Double> avgPosition, List<Double> avgPoints, List<Double> pctVictoire, List<Double> avgNbDartCompleted,
-            Double nbGame, Double nbVictoire) {
+            List<Double> avgPosition, List<Double> avgPoints, 
+                        Double nbGame, Double nbVictoire) {
         this.typeGame = typeJeu;
         this.eloScore = eloScore;
         this.idPlayer = idPlayer;
         this.avgPosition = avgPosition;
         this.avgPoints = avgPoints;
-        this.pctVictory = pctVictoire;
-        this.avgNbDartCompleted = avgNbDartCompleted;
         this.nbGame = nbGame;
         this.nbVictory = nbVictoire;
     }
@@ -45,16 +39,12 @@ public class DartStatPlayerDetailDto {
         this.eloScore = new ArrayList<>();
         this.avgPosition = new ArrayList<>();
         this.avgPoints = new ArrayList<>();
-        this.pctVictory = new ArrayList<>();
-        this.avgNbDartCompleted = new ArrayList<>();
     }
 
     public DartStatPlayerDetailDto() {
         this.eloScore = new ArrayList<>();
         this.avgPosition = new ArrayList<>();
         this.avgPoints = new ArrayList<>();
-        this.pctVictory = new ArrayList<>();
-        this.avgNbDartCompleted = new ArrayList<>();
     }
 
     public String getTypeGame() {
@@ -110,30 +100,6 @@ public class DartStatPlayerDetailDto {
         this.avgPoints.add(avgPoint);
     }
 
-    public List<Double> getPctVictory() {
-        return pctVictory;
-    }
-
-    public void setPctVictory(List<Double> pctVictoire) {
-        this.pctVictory = pctVictoire;
-    }
-
-    public void addPctVictoire(Double pctVictoire){
-        this.pctVictory.add(pctVictoire);
-    } 
-
-    public List<Double> getAvgNbDartCompleted() {
-        return avgNbDartCompleted;
-    }
-
-    public void setAvgNbDartCompleted(List<Double> avgNbDartCompleted) {
-        this.avgNbDartCompleted = avgNbDartCompleted;
-    }
-
-    public void addAvgNbDartCompleted(Double avgNbDartCompleted) {
-        this.avgNbDartCompleted.add(avgNbDartCompleted);    
-    }
-
     public Double getNbGame() {
         return nbGame;
     }
@@ -157,8 +123,6 @@ public class DartStatPlayerDetailDto {
         .append(", idPlayer=").append(idPlayer)
         .append(", avgPosition=").append(avgPosition)
         .append(", avgPoints=").append(avgPoints)
-        .append(", pctVictoire=").append(pctVictory)
-        .append(", avgNbDartCompleted=").append(avgNbDartCompleted)
         .append(", nbGame=").append(nbGame)
         .append(", nbVictoire=").append(nbVictory)
         .append("]")

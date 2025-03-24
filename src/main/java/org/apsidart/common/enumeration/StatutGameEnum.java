@@ -1,4 +1,4 @@
-package org.apsidart.dart.game.enumeration;
+package org.apsidart.common.enumeration;
 
 public enum StatutGameEnum {
 

@@ -18,17 +18,13 @@ public class DartStatPlayerDto {
 
     private Double avgPoints;
 
-    private Double pctVictory;
-
-    private Double avgNbDartCompleted;
 
     private Double nbGame;
 
     private Double nbVictory;
 
     public DartStatPlayerDto(Long id, String typeGame, Double eloScore, Long idPlayer, Timestamp date,
-            Double avgPosition, Double avgPoints, Double pctVictoire, Double avgNbDartCompleted, Double nbGame,
-            Double nbVictoire) {
+            Double avgPosition, Double avgPoints, Double nbGame, Double nbVictoire) {
         this.id = id;
         this.typeGame = typeGame;
         this.eloScore = eloScore;
@@ -36,8 +32,6 @@ public class DartStatPlayerDto {
         this.date = date;
         this.avgPosition = avgPosition;
         this.avgPoints = avgPoints;
-        this.pctVictory = pctVictoire;
-        this.avgNbDartCompleted = avgNbDartCompleted;
         this.nbGame = nbGame;
         this.nbVictory = nbVictoire;
     }
@@ -96,22 +90,6 @@ public class DartStatPlayerDto {
 
     public void setAvgPoints(Double avgPoints) {
         this.avgPoints = avgPoints;
-    }
-
-    public Double getPctVictory() {
-        return pctVictory;
-    }
-
-    public void setPctVictory(Double pctVictoire) {
-        this.pctVictory = pctVictoire;
-    }
-
-    public Double getAvgNbDartCompleted() {
-        return avgNbDartCompleted;
-    }
-
-    public void setAvgNbDartCompleted(Double avgNbDartCompleted) {
-        this.avgNbDartCompleted = avgNbDartCompleted;
     }
 
     public Double getNbGame() {
