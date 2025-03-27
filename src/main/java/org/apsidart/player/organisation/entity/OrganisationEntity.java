@@ -44,10 +44,17 @@ public class OrganisationEntity {
         return players;
     }
 
+    public boolean addPlayers(List<PlayerEntity> playersToAdd){
+        return players.addAll(playersToAdd);
+    }
+
     public OrganisationEntity(String libelle, LocalDate dateCreation, List<PlayerEntity> players) {
         this.libelle = libelle;
         this.dateCreation = dateCreation;
         this.players = players;
+    }
+
+    public OrganisationEntity() {
     }
 
     @Override

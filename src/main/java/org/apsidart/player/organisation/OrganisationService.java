@@ -2,16 +2,18 @@ package org.apsidart.player.organisation;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
+import org.apsidart.player.organisation.dto.CreationOrganisationDto;
 import org.apsidart.player.organisation.dto.OrganisationDto;
 import org.apsidart.player.organisation.entity.OrganisationEntity;
 import org.apsidart.player.organisation.mapper.OrganisationMapper;
-import org.apsidart.player.player.PlayerService;
+import org.apsidart.player.player.PlayerRepository;
+import org.apsidart.player.player.entity.PlayerEntity;
 import org.jboss.logging.Logger;
 
-import com.oracle.svm.core.annotate.Inject;
-
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 
@@ -21,10 +23,13 @@ public class OrganisationService {
     @Inject
     private OrganisationRepository or;
 
+    @Inject
+    private PlayerRepository pr;
+
     private static final Logger LOG = Logger.getLogger(OrganisationService.class);
 
     @Transactional
-    public Long createOrganisaton(OrganisationDto dto){
+    public Long createOrganisaton(CreationOrganisationDto dto){
         LOG.info("[START] Creation d'une nouvelle organisation : " + dto.toString());
         OrganisationEntity entity = OrganisationMapper.dtoToEntity(dto);
         or.persistAndFlush(entity);
@@ -53,8 +58,13 @@ public class OrganisationService {
     }  
     
     @Transactional
-    public boolean addPlayerToOrganisation(Long idPlayer, Long idOrganisation){
-        return true
+    public void addPlayersToOrganisation(List<Long> idPlayers, Long idOrganisation){
+        LOG.info("[DO] Ajout players sur organisation.");
+        OrganisationEntity organisation = or.findById(idOrganisation);
+        List<PlayerEntity> player = idPlayers.stream().map(id -> pr.findById(id)).collect(Collectors.toList());
+        organisation.addPlayers(player);
+        or.persistAndFlush(organisation);
+        LOG.info("[SUCCESS] Ajout players sur organisation : " + organisation.toString());
 
     }
 }

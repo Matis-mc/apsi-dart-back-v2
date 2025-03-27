@@ -7,7 +7,7 @@ import org.apsidart.dart.stat.dto.DartStatPlayerDto;
 import org.apsidart.dart.stat.entity.AvgStat;
 import org.apsidart.dart.stat.entity.StatPlayerEntity;
 import org.apsidart.dart.stat.entity.TmstpStat;
-import org.apsidart.player.dto.PlayerDto;
+import org.apsidart.player.player.dto.PlayerDto;
 
 public class DartStatMapper {
 
