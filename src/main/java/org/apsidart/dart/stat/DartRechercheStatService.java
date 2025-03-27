@@ -17,8 +17,8 @@ import org.apsidart.dart.stat.dto.DartStatGameDto;
 import org.apsidart.dart.stat.dto.DartStatPlayerDetailDto;
 import org.apsidart.dart.stat.dto.DartStatPlayerDto;
 import org.apsidart.dart.stat.mapper.DartStatMapper;
-import org.apsidart.player.PlayerService;
 import org.apsidart.player.dto.PlayerDto;
+import org.apsidart.player.player.PlayerService;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;

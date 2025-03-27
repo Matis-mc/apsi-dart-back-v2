@@ -26,8 +26,8 @@ import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 import org.apsidart.dart.stat.DartStatEnregistrementService;
 import org.apsidart.ia.IAService;
-import org.apsidart.player.PlayerService;
 import org.apsidart.player.dto.PlayerDto;
+import org.apsidart.player.player.PlayerService;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;

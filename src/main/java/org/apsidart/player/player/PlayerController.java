@@ -1,8 +1,8 @@
-package org.apsidart.player;
+package org.apsidart.player.player;
 
 import java.util.List;
 
-import org.apsidart.player.dto.PlayerDto;
+import org.apsidart.player.player.dto.PlayerDto;
 
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

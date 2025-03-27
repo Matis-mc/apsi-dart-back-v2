@@ -1,22 +1,33 @@
-package org.apsidart.player.entity;
+package org.apsidart.player.player.entity;
+
+import java.util.List;
+
+import org.apsidart.player.organisation.entity.OrganisationEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 /**
- * La reprsentation d'un utilisateur de l'application
+ * La représentation d'un utilisateur de l'application
  */
 @Entity
 @Table(name = "player")
 public class PlayerEntity {
     
-    @Id @GeneratedValue private Long id;  
+    @Id @GeneratedValue
+    private Long id;  
 
     private String firstName;
+    
     private String lastName;
+
     private String pseudo;
+
+    @ManyToMany
+    private List<OrganisationEntity> organisations;
 
     public PlayerEntity(Long id, String firstName, String lastName, String pseudo) {
         this.id = id;
