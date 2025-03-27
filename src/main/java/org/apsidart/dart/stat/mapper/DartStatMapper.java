@@ -1,5 +1,7 @@
 package org.apsidart.dart.stat.mapper;
 
+import java.util.Comparator;
+
 import org.apsidart.common.ListUtils;
 import org.apsidart.dart.stat.dto.DartRankingPlayerElementDto;
 import org.apsidart.dart.stat.dto.DartStatPlayerDetailDto;
@@ -30,7 +32,7 @@ public class DartStatMapper {
 
         return new DartStatPlayerDetailDto(
             entity.getTypeJeu(),
-            entity.getEloScores().stream().map(TmstpStat::getValue).map(d -> d.intValue()).toList(),
+            entity.getEloScores().stream().sorted(Comparator.comparing(TmstpStat::getDate).reversed()).map(TmstpStat::getValue).map(d -> d.intValue()).toList(),
             entity.getIdPlayer(),
             entity.getAvgPosition().stream().map(AvgStat::getValue).toList(),
             entity.getAvgPoints().stream().map(AvgStat::getValue).toList(),
