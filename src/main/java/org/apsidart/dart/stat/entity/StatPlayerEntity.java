@@ -142,7 +142,7 @@ public class StatPlayerEntity {
         if( this.avgPosition.isEmpty()){
             this.avgPosition.add(new AvgStat(1d, newValue, AVG_POSITION));
         } else {
-            AvgStat lastElement = this.avgPosition.get(this.avgPosition.size());
+            AvgStat lastElement = this.avgPosition.get(this.avgPosition.size() - 1);
             double poid = this.avgPosition.size() + 1d;
             this.avgPosition.add(new AvgStat(
                 poid,
