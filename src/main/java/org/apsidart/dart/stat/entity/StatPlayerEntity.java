@@ -163,7 +163,7 @@ public class StatPlayerEntity {
         if( this.avgPoints.isEmpty()){
             this.avgPoints.add(new AvgStat(1d, newValue, AVG_POINT));
         } else {
-            AvgStat lastElement = this.avgPoints.get(this.avgPoints.size());
+            AvgStat lastElement = this.avgPoints.get(this.avgPoints.size() - 1);
             double poid = this.avgPoints.size() + 1d;
             this.avgPoints.add(new AvgStat(
                 poid,
