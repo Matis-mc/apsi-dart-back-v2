@@ -1,23 +1,30 @@
 package org.apsidart.dart.game;
 
-import static org.apsidart.dart.game.enumeration.StatutGameEnum.CREATION;
-import static org.apsidart.dart.game.enumeration.StatutGameEnum.IN_PROGRESS;
+import static org.apsidart.common.enumeration.StatutGameEnum.CREATION;
+import static org.apsidart.common.enumeration.StatutGameEnum.IN_PROGRESS;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
+import org.apsidart.common.ListUtils;
+import org.apsidart.common.enumeration.StatutGameEnum;
 import org.apsidart.common.exception.InvalidStatutGameException;
 import org.apsidart.dart.game.dto.DartGameCreationDto;
+import org.apsidart.dart.game.dto.DartGameDetailDto;
 import org.apsidart.dart.game.dto.DartGameDto;
 import org.apsidart.dart.game.dto.DartGameResumeDto;
 import org.apsidart.dart.game.dto.DartGameRoundDto;
+import org.apsidart.dart.game.dto.DartPlayerDto;
 import org.apsidart.dart.game.dto.DartRoundResumeDto;
 import org.apsidart.dart.game.entity.DartGameEntity;
-import org.apsidart.dart.game.enumeration.StatutGameEnum;
 import org.apsidart.dart.game.mapper.DartGameMapper;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 import org.apsidart.dart.stat.DartStatEnregistrementService;
+import org.apsidart.player.PlayerService;
+import org.apsidart.player.dto.PlayerDto;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -38,6 +45,9 @@ public class DartGameService {
 
     @Inject
     private DartStatEnregistrementService dartStatEnregistrementService;
+
+    @Inject
+    private PlayerService playerService;
 
     private static final Logger LOG = Logger.getLogger(DartGameService.class);
 
@@ -63,6 +73,7 @@ public class DartGameService {
         return repository.findAll()
             .stream()
             .map(entity -> DartGameMapper.entityTodto(entity))
+            .sorted(Comparator.comparing(DartGameDto::getDate))
             .toList();
         
     }
@@ -124,6 +135,41 @@ public class DartGameService {
         LOG.info("[SUCCESS] Récupération de l'état de la partie." );
         return new DartGameResumeDto(roundsResume);
 
+    }
+
+    @Transactional
+    public List<DartGameDetailDto> getAllGamesDetail(){
+        LOG.info("[START] Récupération de toute les parties en format detaillé");
+        List<DartGameDetailDto> games =  repository.findAll()
+        .stream()
+        .map(this::getDetail)
+        .sorted(Comparator.comparing(DartGameDetailDto::date))
+        .toList();
+        LOG.info("[SUCCESS] Récupération de toute les parties en format detaillé");
+        return games;
+        
+    }
+
+    private DartGameDetailDto getDetail(DartGameEntity entity){
+        LOG.info("[DO] Récupération de la partie " + entity.getId());
+        List<DartPlayerDto> players = performanceService.getPerformanceByIdGame(entity.getId())
+            .stream()
+            .sorted((p1, p2) -> ListUtils.getLastElement(p1.getHistoriquePosition())
+                            .compareTo(ListUtils.getLastElement(p2.getHistoriquePosition())))
+            .map(p -> {
+                    try {
+                        PlayerDto pe = playerService.getPlayerById(p.getIdPlayer());
+                        return new DartPlayerDto(p.getIdPlayer(),
+                            pe.firstName(), pe.name(), pe.pseudo());
+                    } catch ( NotFoundException e){
+                        LOG.error("[FAILED] Récupération du joueur " + p.getIdPlayer());
+                        return null;
+                    }
+                })
+            .filter(Objects::nonNull)
+            .toList();
+        return new DartGameDetailDto(entity.getId(), entity.getStatut(), entity.getType(), entity.getDate(), players);
+        
     }
 
     private DartGameEntity checkStatuGame(Long idGame, @NotBlank String statutAuthorized){

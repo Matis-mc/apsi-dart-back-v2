@@ -2,8 +2,7 @@ package org.apsidart.dart.game.dto;
 
 import java.util.List;
 
-import org.apsidart.dart.game.enumeration.CodeTypGameEnum;
-import org.apsidart.player.dto.PlayerDto;
+import org.apsidart.common.enumeration.CodeTypGameEnum;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -16,10 +15,10 @@ public class DartGameCreationDto {
     private String creationDate;
 
     @NotEmpty
-    private List<PlayerDto> players;
+    private List<PlayerPerformanceDto> players;
 
     public DartGameCreationDto(@NotBlank CodeTypGameEnum typeGame, @NotBlank String creationDate,
-            @NotEmpty List<PlayerDto> players) {
+            @NotEmpty List<PlayerPerformanceDto> players) {
         this.typeGame = typeGame;
         this.creationDate = creationDate;
         this.players = players;
@@ -41,11 +40,11 @@ public class DartGameCreationDto {
         this.creationDate = dateCreation;
     }
 
-    public List<PlayerDto> getPlayers() {
+    public List<PlayerPerformanceDto> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<PlayerDto> players) {
+    public void setPlayers(List<PlayerPerformanceDto> players) {
         this.players = players;
     }
 }

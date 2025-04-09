@@ -5,9 +5,9 @@ import java.util.List;
 public class DartGameRoundDto {
     private Long idGame;
     private Integer numberRound;
-    private List<PlayerPeformanceDto> performances;
+    private List<PlayerPerformanceDto> performances;
 
-    public DartGameRoundDto(Long idJeu, Integer numeroTour, List<PlayerPeformanceDto> performances) {
+    public DartGameRoundDto(Long idJeu, Integer numeroTour, List<PlayerPerformanceDto> performances) {
         this.idGame = idJeu;
         this.numberRound = numeroTour;
         this.performances = performances;
@@ -29,11 +29,11 @@ public class DartGameRoundDto {
         this.numberRound = numeroTour;
     }
 
-    public List<PlayerPeformanceDto> getPerformances() {
+    public List<PlayerPerformanceDto> getPerformances() {
         return performances;
     }
 
-    public void setPerformances(List<PlayerPeformanceDto> performances) {
+    public void setPerformances(List<PlayerPerformanceDto> performances) {
         this.performances = performances;
     }
 

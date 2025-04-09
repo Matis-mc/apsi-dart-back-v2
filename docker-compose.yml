@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   denis-app:
-    image: quarkus/apsidart-backend-jvm:latest
+    image: quarkus/denis-back:latest
     build: 
       context: .
     container_name: denis-app

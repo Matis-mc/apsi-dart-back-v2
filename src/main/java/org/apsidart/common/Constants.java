@@ -22,6 +22,6 @@ public final class Constants {
         public static final String AVG_DART_COMPLETE = "moyenne de fléchette valides";
         public static final String NB_GAME = "nombre de partie";
         public static final String NB_VICTOIRE = "nombre de victoire";
-
+        public static final String TYPE_ELO = "ELO";
     }
 }

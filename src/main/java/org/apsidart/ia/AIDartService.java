@@ -13,9 +13,7 @@ import io.quarkiverse.langchain4j.RegisterAiService;
 @RegisterAiService
 public interface AIDartService {
 
-    // Scope / context passed to the LLM
   @SystemMessage(DART_COMMENTATEUR_INIT)
-  // Prompt (with detailed instructions and variable section) passed to the LLM
   @UserMessage(DART_COMMENTAIRE_ROUND_CONTEXT)
   String commentVolee(String volleysDescription);
 
