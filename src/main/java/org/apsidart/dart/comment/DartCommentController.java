@@ -3,8 +3,7 @@ package org.apsidart.dart.comment;
 import java.util.List;
 
 import org.apsidart.dart.game.dto.CommentDto;
-import org.apsidart.dart.game.dto.PlayerPeformanceDto;
-import org.apsidart.player.dto.PlayerDto;
+import org.apsidart.dart.game.dto.PlayerPerformanceDto;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -28,13 +27,13 @@ public class DartCommentController {
 
     @POST
     @Path("/game/{game-id}")
-    public CommentDto commentOnStartGame(@Valid @PathParam("game-id") String gameId, @Valid List<PlayerDto> playerDtos) {
+    public CommentDto commentOnStartGame(@Valid @PathParam("game-id") String gameId, @Valid List<PlayerPerformanceDto> playerDtos) {
         return commentService.getDartStartGameCommentaire(playerDtos);
     }
 
     @POST
     @Path("/game/{game-id}/round")
-    public CommentDto commentOnRound(@Valid @PathParam("game-id") String gameId, @Valid List<PlayerPeformanceDto> performances){
+    public CommentDto commentOnRound(@Valid @PathParam("game-id") String gameId, @Valid List<PlayerPerformanceDto> performances){
         return commentService.getDartRoundCommentaire(performances);
     }
 }

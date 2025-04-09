@@ -6,7 +6,10 @@ import org.apsidart.dart.game.dto.CommentDto;
 import org.apsidart.dart.game.dto.PlayerPerformanceDto;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.ia.AIDartService;
-import org.apsidart.player.dto.PlayerDto;
+import org.jboss.logging.Logger;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class CommentService {
@@ -17,7 +20,7 @@ public class CommentService {
     private static final Logger LOG = Logger.getLogger(DartPerformanceService.class);
     private static final String CORRECT_CHAR_REGEX = "^[a-zA-ZÀ-Ÿ-.!?]$";
 
-    public CommentDto getDartStartGameCommentaire(List<PlayerDto> playerDtos){
+    public CommentDto getDartStartGameCommentaire(List<PlayerPerformanceDto> playerDtos){
         try {
             LOG.info("[DO] Generation de commentaire avec les endpoint OVH : ");
             String commentaire = commentateurService.commentStartGame(constructStartGamePrompt(playerDtos));
