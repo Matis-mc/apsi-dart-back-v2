@@ -1,7 +1,6 @@
 package org.apsidart.dart.stat.entity;
 
-import java.time.LocalDate;
-
+import java.sql.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,9 +20,9 @@ public class TmstpStat {
 
     private Double value;
 
-    private LocalDate date;
+    private Date date;
 
-    public TmstpStat(String typeGame, String type, Double value, LocalDate date) {
+    public TmstpStat(String typeGame, String type, Double value, Date date) {
         this.typeGame = typeGame;
         this.type = type;
         this.value = value;
@@ -48,7 +47,7 @@ public class TmstpStat {
         return value;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     };
 

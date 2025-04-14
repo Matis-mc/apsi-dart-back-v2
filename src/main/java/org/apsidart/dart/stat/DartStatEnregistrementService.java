@@ -7,10 +7,10 @@ import static org.apsidart.common.Constants.Stat.TYPE_ELO;
 import static org.apsidart.common.Constants.Stat.NB_GAME;
 import static org.apsidart.common.Constants.Stat.NB_VICTOIRE;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,13 +93,13 @@ public class DartStatEnregistrementService {
         boolean isVictoire = isVictoire(performanceDto.getHistoriquePosition().getLast());
 
         List<TmstpStat> elos = new ArrayList<>();
-        elos.add(new TmstpStat(typeGame, TYPE_ELO, ELO_INITIAL, LocalDate.now()));
+        elos.add(new TmstpStat(typeGame, TYPE_ELO, ELO_INITIAL, Date.valueOf(LocalDate.now())));
 
         StatPlayerEntity e =  new StatPlayerEntity(
                 typeGame, 
                 elos,
                 performanceDto.getIdPlayer(), 
-                new Timestamp(new Date().getTime()),
+                new Timestamp(Date.valueOf(LocalDate.now()).getTime()),
                 new ArrayList<AvgStat>(List.of(new AvgStat(ListUtils.getLastElement(performanceDto.getHistoriquePosition()), AVG_POSITION))),
                 new ArrayList<AvgStat>(List.of(new AvgStat(ListUtils.getLastElement(performanceDto.getScore()), AVG_POINT))),
                 new SumStat(1d, NB_GAME ),
