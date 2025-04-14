@@ -1,4 +1,4 @@
-package org.apsidart.player.dto;
+package org.apsidart.player.player.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

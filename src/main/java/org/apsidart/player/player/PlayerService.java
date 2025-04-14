@@ -1,11 +1,11 @@
-package org.apsidart.player;
+package org.apsidart.player.player;
 
 import java.util.List;
 import java.util.Objects;
 
-import org.apsidart.player.dto.PlayerDto;
-import org.apsidart.player.entity.PlayerEntity;
-import org.apsidart.player.mapper.PlayerMapper;
+import org.apsidart.player.player.dto.PlayerDto;
+import org.apsidart.player.player.entity.PlayerEntity;
+import org.apsidart.player.player.mapper.PlayerMapper;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;

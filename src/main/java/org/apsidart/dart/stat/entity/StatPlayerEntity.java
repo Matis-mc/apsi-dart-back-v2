@@ -1,5 +1,6 @@
 package org.apsidart.dart.stat.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -111,7 +112,7 @@ public class StatPlayerEntity {
     }
 
     public void addEloScore(double eloScore, String typeGame){
-        this.eloScores.add(new TmstpStat(typeGame, TYPE_ELO, eloScore, LocalDate.now()));
+        this.eloScores.add(new TmstpStat(typeGame, TYPE_ELO, eloScore, Date.valueOf(LocalDate.now())));
     }
 
     public Long getIdPlayer() {

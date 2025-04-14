@@ -1,12 +1,16 @@
-package org.apsidart.player.mapper;
+package org.apsidart.player.player.mapper;
 
-import org.apsidart.player.dto.PlayerDto;
-import org.apsidart.player.entity.PlayerEntity;
+import org.apsidart.player.player.dto.PlayerDto;
+import org.apsidart.player.player.entity.PlayerEntity;
 
 public class PlayerMapper {
 
     public static PlayerEntity dtoToEntity(PlayerDto pcd){
         return new PlayerEntity(pcd.firstName(), pcd.name(), pcd.pseudo());
+    }
+
+    public static PlayerEntity dtoToExistingEntity(PlayerDto pcd){
+        return new PlayerEntity(pcd.id(), pcd.firstName(), pcd.name(), pcd.pseudo());
     }
 
     public static PlayerDto entityToDto(PlayerEntity pe){

@@ -5,6 +5,6 @@ import jakarta.ws.rs.core.Response;
 
 public class InvalidStatutGameException extends WebApplicationException {
     public InvalidStatutGameException(String statut) {
-        super("Le statut de la partie n'est pas correct : " + statut, Response.Status.BAD_REQUEST);
+        super("Le statut de la partie n'est pas correct : " + statut, Response.Status.INTERNAL_SERVER_ERROR);
     }
 }

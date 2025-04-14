@@ -60,7 +60,7 @@ public class DartPerformanceDto {
     }
 
     public Integer getLastPosition(){
-        return historiquePosition.get(historiquePosition.size());
+        return historiquePosition.get(historiquePosition.size()-1);
     }
 
     public void setHistoriquePosition(List<Integer> historiquePosition) {

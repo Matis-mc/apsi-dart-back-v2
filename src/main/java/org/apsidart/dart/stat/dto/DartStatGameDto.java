@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apsidart.player.dto.PlayerDto;
+import org.apsidart.player.player.dto.PlayerDto;
+
 
 
 public class DartStatGameDto {
