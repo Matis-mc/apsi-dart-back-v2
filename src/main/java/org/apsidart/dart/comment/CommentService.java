@@ -1,37 +1,37 @@
-package org.apsidart.ia;
+package org.apsidart.dart.comment;
 
 import java.util.List;
 
 import org.apsidart.dart.game.dto.CommentDto;
-import org.apsidart.dart.game.dto.PlayerPeformanceDto;
+import org.apsidart.dart.game.dto.PlayerPerformanceDto;
 import org.apsidart.dart.performance.DartPerformanceService;
-import org.apsidart.player.dto.PlayerDto;
+import org.apsidart.ia.AIDartService;
 import org.jboss.logging.Logger;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class IAService {
+public class CommentService {
 
     @Inject                                            
-    private CommentateurService commentateurService;
+    private AIDartService commentateurService;
 
     private static final Logger LOG = Logger.getLogger(DartPerformanceService.class);
     private static final String CORRECT_CHAR_REGEX = "^[a-zA-ZÀ-Ÿ-.!?]$";
 
-    public String getDartStartGameCommentaire(List<PlayerDto> playerDtos){
+    public CommentDto getDartStartGameCommentaire(List<PlayerPerformanceDto> playerDtos){
         try {
             LOG.info("[DO] Generation de commentaire avec les endpoint OVH : ");
             String commentaire = commentateurService.commentStartGame(constructStartGamePrompt(playerDtos));
-            return checkIaReturn(commentaire);
+            return new CommentDto(checkIaReturn(commentaire));
         } catch (RuntimeException e) {
             LOG.warn("Impossible d'appeler les endpoint OVH : " + e);
-            return "ça me coupe la chique !";
+            return new CommentDto("ça me coupe la chique !");
         }
     }
     
-    public CommentDto getDartRoundCommentaire(List<PlayerPeformanceDto> playerPeformanceDtos){
+    public CommentDto getDartRoundCommentaire(List<PlayerPerformanceDto> playerPeformanceDtos){
         try {
             LOG.info("[DO] Generation de commentaire avec les endpoint OVH : ");
             String commentaire = commentateurService.commentVolee(constructRoundPrompt(playerPeformanceDtos));
@@ -42,37 +42,17 @@ public class IAService {
         }
     }
 
-    public CommentDto getDartEndGameCommentaire(List<PlayerPeformanceDto> playerPeformanceDtos){
-        try {
-            LOG.info("[DO] Generation de commentaire avec les endpoint OVH : ");
-            String commentaire = commentateurService.commentEndGame(constructEndGamePrompt(playerPeformanceDtos));
-            return new CommentDto(checkIaReturn(commentaire));
-        } catch (RuntimeException e) {
-            LOG.warn("Impossible d'appeler les endpoint OVH : " + e);
-            return new CommentDto("ça me coupe la chique !");
-        }
-    }
-
-    private String constructEndGamePrompt(List<PlayerPeformanceDto> playerPeformanceDtos){
-        String prompt = "Dernier tour " + playerPeformanceDtos.get(0).getNumberRound() + ". ";
-        for (PlayerPeformanceDto p : playerPeformanceDtos){
-            prompt += p.getPseudo() + " termine " + p.getPosition() + " avec " + p.getScore() + "points, ";  
-        }
-        return prompt;
-    }
-
-    private String constructStartGamePrompt(List<PlayerDto> playerOrdered){
+    private String constructStartGamePrompt(List<PlayerPerformanceDto> playerOrdered){
         String prompt = "Premier tour. ";
-        for (PlayerDto p : playerOrdered){
-            int position = playerOrdered.indexOf(p) + 1;
-            prompt += p.pseudo() + " commence en position " + position + ", ";  
+        for (PlayerPerformanceDto p : playerOrdered){
+            prompt += p.getPseudo() + " commence en position " + p.getPosition() + ", ";  
         }
         return prompt;
     }
 
-    private String constructRoundPrompt(List<PlayerPeformanceDto> playerPeformanceDtos){
+    private String constructRoundPrompt(List<PlayerPerformanceDto> playerPeformanceDtos){
         String prompt = "Tour " + playerPeformanceDtos.get(0).getNumberRound() + ". ";
-        for (PlayerPeformanceDto p : playerPeformanceDtos){
+        for (PlayerPerformanceDto p : playerPeformanceDtos){
             prompt += p.getPseudo() + " a lancé " + describeVolee(p.getVolley()) + "et a " + p.getScore() + "points, ";  
         }
         return prompt;
