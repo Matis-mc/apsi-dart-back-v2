@@ -41,7 +41,7 @@ public class BabykonStatEntity {
         this.nbGamelle = nbGamelle;
     }
 
-    public PlayerEntity getPlayerDto() {
+    public PlayerEntity getPlayer() {
         return player;
     }
 

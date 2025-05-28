@@ -8,10 +8,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import org.apsidart.common.ranking.dto.RankingPlayerElementDto;
+import org.apsidart.common.ranking.dto.RankingPlayerDto;
 import org.apsidart.dart.performance.DartPerformanceService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
-import org.apsidart.dart.stat.dto.DartRankingPlayerDto;
-import org.apsidart.dart.stat.dto.DartRankingPlayerElementDto;
 import org.apsidart.dart.stat.dto.DartStatDetailGameDto;
 import org.apsidart.dart.stat.dto.DartStatGameDto;
 import org.apsidart.dart.stat.dto.DartStatPlayerDetailDto;
@@ -104,18 +104,19 @@ public class DartRechercheStatService {
     }
 
 
-    public DartRankingPlayerDto getClassementPlayers(){
-        List<DartRankingPlayerElementDto> classements = playerService.getAllplayer()
+    public RankingPlayerDto getClassementPlayers(){
+        List<RankingPlayerElementDto> classements = playerService.getAllplayer()
             .stream()
             .map( p -> getClassementFromPlayer(p))
             .filter(Objects::nonNull)
-            .sorted(Comparator.comparing(DartRankingPlayerElementDto::elo).reversed())
+            .filter(p -> p.nbGame() > 3)
+            .sorted(Comparator.comparing(RankingPlayerElementDto::elo).reversed())
             .toList();
-        return new DartRankingPlayerDto(LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT_DD_MM_YYYYY)), classements);
+        return new RankingPlayerDto(LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT_DD_MM_YYYYY)), classements);
     }
 
     // pour les joueurs qui n'ont as fait de partie de fléchette, il n'y a pas de performance. On retourne null, et on filtrera dessus.
-    public DartRankingPlayerElementDto getClassementFromPlayer(PlayerDto playerDto){
+    public RankingPlayerElementDto getClassementFromPlayer(PlayerDto playerDto){
         return statRepository.findLastStatByIdPlayer(playerDto.id())
             .map(stat -> DartStatMapper.toClassement(playerDto, stat))
             .orElse(null);

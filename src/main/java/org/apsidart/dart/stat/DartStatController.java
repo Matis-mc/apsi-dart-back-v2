@@ -2,7 +2,7 @@ package org.apsidart.dart.stat;
 
 import java.util.List;
 
-import org.apsidart.dart.stat.dto.DartRankingPlayerDto;
+import org.apsidart.common.ranking.dto.RankingPlayerDto;
 import org.apsidart.dart.stat.dto.DartStatDetailGameDto;
 import org.apsidart.dart.stat.dto.DartStatGameDto;
 import org.apsidart.dart.stat.dto.DartStatPlayerDetailDto;
@@ -30,12 +30,6 @@ public class DartStatController {
 
     @Inject
     private DartRechercheStatService service;
-
-    @GET
-    @Path("/player/ranking")
-    public DartRankingPlayerDto getRanking(){
-        return service.getClassementPlayers();
-    }
 
     @GET
     @Path("/player/{id}")

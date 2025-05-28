@@ -1,6 +1,6 @@
-package org.apsidart.dart.stat.dto;
+package org.apsidart.common.ranking.dto;
 
-public record DartRankingPlayerElementDto(
+public record RankingPlayerElementDto(
     Long idPlayer,
     String name,
     String lastName,

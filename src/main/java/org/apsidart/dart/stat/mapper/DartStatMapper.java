@@ -1,6 +1,6 @@
 package org.apsidart.dart.stat.mapper;
 
-import org.apsidart.dart.stat.dto.DartRankingPlayerElementDto;
+import org.apsidart.common.ranking.dto.RankingPlayerElementDto;
 import org.apsidart.dart.stat.dto.DartStatPlayerDto;
 import org.apsidart.dart.stat.entity.DartStatPlayerEntity;
 import org.apsidart.player.dto.PlayerDto;
@@ -24,8 +24,8 @@ public class DartStatMapper {
 
     }
 
-    public static DartRankingPlayerElementDto toClassement(PlayerDto playerDto, DartStatPlayerEntity statEntity){
-        return new DartRankingPlayerElementDto(
+    public static RankingPlayerElementDto toClassement(PlayerDto playerDto, DartStatPlayerEntity statEntity){
+        return new RankingPlayerElementDto(
             playerDto.id(),
             playerDto.firstName(),
             playerDto.name(),
