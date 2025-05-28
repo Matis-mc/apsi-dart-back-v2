@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apsidart.dart.multiElo.MultiEloService;
+import org.apsidart.common.multiElo.MultiEloService;
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 import org.apsidart.dart.stat.entity.AvgStat;
 import org.apsidart.dart.stat.entity.DartStatPlayerEntity;

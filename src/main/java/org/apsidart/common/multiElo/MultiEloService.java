@@ -1,4 +1,4 @@
-package org.apsidart.dart.multiElo;
+package org.apsidart.common.multiElo;
 
 import org.apsidart.dart.performance.dto.DartPerformanceDto;
 
