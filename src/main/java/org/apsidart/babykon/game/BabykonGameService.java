@@ -36,7 +36,7 @@ public class BabykonGameService {
         gameRepository.persistAndFlush(entity);
 
         // calcul nouvel Elo + Mise à jour des statistiques
-        return statService.uploadStatWithNewGame(dto);
+        return statService.uploadStatFromGame(dto);
 
     }
     

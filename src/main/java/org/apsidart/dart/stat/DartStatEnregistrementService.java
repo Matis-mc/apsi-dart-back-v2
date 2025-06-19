@@ -58,7 +58,7 @@ public class DartStatEnregistrementService {
         statEntitiesWithoutEloUpdated.forEach( s -> {
             s.setEloScore(multiEloService
                 .calculateNewEloRating(
-                        getPerformanceFromListWithIdPlayer(performances, s.getIdPlayer()), s.getEloScore(), eloScores));
+                        getPerformanceFromListWithIdPlayer(performances, s.getIdPlayer()).getHistoriquePosition().getLast(), s.getEloScore(), eloScores));
             LOG.info("[DO] MAJ score elo et enregistrement de l'entity : " + s.toString());        
             dartStatRepository.persist(s);});
         LOG.info("[SUCCESS] maj ou creation des statistiques de chaque joueur ");       

@@ -1,15 +1,18 @@
 package org.apsidart.babykon.stat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import org.apsidart.babykon.game.dto.BabykonGameDto;
 import org.apsidart.babykon.stat.dto.BabykonStatDto;
 import org.apsidart.babykon.stat.entity.BabykonStatEntity;
+import org.apsidart.common.multiElo.MultiEloService;
 import org.apsidart.common.ranking.dto.RankingPlayerDto;
 import org.apsidart.common.ranking.dto.RankingPlayerElementDto;
 import org.apsidart.common.simpleElo.SimpleEloFunction;
+import org.apsidart.common.tournament.dto.TournamentDto;
 import org.apsidart.dart.game.DartGameService;
 import org.apsidart.player.PlayerRepository;
 import org.apsidart.player.entity.PlayerEntity;
@@ -19,12 +22,16 @@ import static org.apsidart.common.Constants.Stat.ELO_INITIAL;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class BabykonStatService {
 
     @Inject
     SimpleEloFunction eloFunction;
+
+    @Inject
+    MultiEloService multiEloService;
 
     @Inject
     BabykonStatRepository statRepository;
@@ -34,7 +41,7 @@ public class BabykonStatService {
 
     private static final Logger LOG = Logger.getLogger(DartGameService.class);
 
-    public List<BabykonStatDto> uploadStatWithNewGame(BabykonGameDto gameDto){
+    public List<BabykonStatDto> uploadStatFromGame(BabykonGameDto gameDto){
 
         LOG.info("[START] Update elo");
         
@@ -68,6 +75,43 @@ public class BabykonStatService {
             .sorted(Comparator.comparing(RankingPlayerElementDto::elo).reversed())
             .toList();
             return new RankingPlayerDto(LocalDate.now().toString(), rankings);
+    }
+
+    @Transactional
+    public List<BabykonStatDto> uploadStatFromTournament(TournamentDto tournamentDto) {
+        double[] playersElo = tournamentDto.rankings()
+            .stream()
+            .map(ranking -> {
+                long idPlayer = ranking.idPlayer();
+                BabykonStatEntity stat = getBabykonStatForPlayer(idPlayer);
+                return stat.getEloScore();
+            })
+            .mapToDouble(Double::doubleValue)
+            .toArray();
+
+        List<BabykonStatDto> stats = new ArrayList<>();
+        
+        tournamentDto.rankings()
+            .forEach(
+                ranking -> {
+                    BabykonStatEntity statEntity = getBabykonStatForPlayer(ranking.idPlayer());
+                    double newElo = multiEloService.calculateNewEloRating(
+                        ranking.rank(), 
+                        statEntity.getEloScore(), 
+                        playersElo);
+                    statEntity.setEloScore(newElo);
+                    statEntity.setNbGame(statEntity.getNbGame() + tournamentDto.nbGame());
+                    statEntity.setNbVictoire(statEntity.getNbVictoire() + ranking.nbVictory());
+                    stats.add(new BabykonStatDto(
+                        statEntity.getPlayer().getId(), 
+                        statEntity.getEloScore(), 
+                        statEntity.getNbGame(), 
+                        statEntity.getNbVictoire()));
+                    statRepository.persist(statEntity);
+                }
+            );
+        statRepository.flush();
+        return stats;
     }
 
     private BabykonStatEntity updateStatEntityAfterGame(BabykonStatEntity stat, double deltaElo, boolean isVictory){

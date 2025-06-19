@@ -3,6 +3,7 @@ package org.apsidart.babykon.stat.entity;
 import org.apsidart.player.dto.PlayerDto;
 import org.apsidart.player.entity.PlayerEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
